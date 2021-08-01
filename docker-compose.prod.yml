@@ -1,0 +1,15 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - "./nginx/nginx.prod.conf:/etc/nginx/templates/default.conf.template"
+      - "client_dist:/usr/src/app/client"
+    restart: always
+  nodejs:
+    volumes:
+      - "client_dist:/usr/src/app/dist"
+
+volumes:
+  client_dist:
+    driver: local

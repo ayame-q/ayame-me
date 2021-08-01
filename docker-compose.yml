@@ -1,0 +1,21 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:alpine
+    env_file:
+      - ".env"
+    volumes:
+      - "./nginx/nginx.conf:/etc/nginx/templates/default.conf.template"
+    links:
+      - "nodejs"
+    ports:
+      - "$PORT:80"
+  nodejs:
+    build: client
+    env_file:
+      - ".env"
+    environment:
+      - "PORT=3000"
+    volumes:
+      - "./client:/usr/src/app"
+      - "/usr/src/app/node_modules"
