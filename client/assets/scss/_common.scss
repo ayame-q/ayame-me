@@ -1,0 +1,37 @@
+@import "colors";
+
+html {
+	font-family: "A1ゴシック M", A1 Gothic M, sans-serif;
+	color: $text-color;
+	word-spacing: 1px;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	box-sizing: border-box;
+	font-size: max(16px, 1.5vw);
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+a {
+	color: $text-color;
+	cursor: pointer;
+}
+
+h1,
+h2 {
+	color: $title-color;
+	font-family: "ぺんぱる", Penpal, sans-serif;
+}
