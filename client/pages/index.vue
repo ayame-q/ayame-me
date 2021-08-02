@@ -125,175 +125,39 @@
 				</section>
 				<div class="coaster-rail" />
 			</div>
-			<section id="works" ref="works" style="height: 150vh;">
+			<section id="works" ref="works" style="height: 230vh;">
 				<div class="content" v-bind:class="{active: isWorksActive}">
 					<h2>Works</h2>
 					<div class="works-list">
-						<article>
-							<nuxt-link to="">
-								<h3>INIAD meets web</h3>
-								<p class="subtitle">
-									学内オンライン新歓イベント
-								</p>
+						<article v-for="(work, index) of works" v-bind:key="index" class="teacup">
+							<nuxt-link v-bind:to="`/works/${work.slug}`">
+								<h3 v-html="work.title" />
+								<p class="subtitle" v-html="work.subTitle" />
 								<p>
-									<img class="thumbnail" src="/iniadmeetsweb.png" alt="">
-									<img class="teacup-back" src="@/assets/img/teacup-pink-back.svg" alt="">
-									<img class="teacup-front" src="@/assets/img/teacup-pink-front.svg" alt="">
+									<img class="thumbnail" v-bind:src="work.thumbnail" alt="">
+									<span v-if="index % 2 === 0">
+										<img class="teacup-back" src="@/assets/img/teacup-pink-back.svg" alt="">
+										<img class="teacup-front" src="@/assets/img/teacup-pink-front.svg" alt="">
+									</span>
+									<span v-else>
+										<img class="teacup-back" src="@/assets/img/teacup-blue-back.svg" alt="">
+										<img class="teacup-front" src="@/assets/img/teacup-blue-front.svg" alt="">
+									</span>
 								</p>
 							</nuxt-link>
 						</article>
-						<article>
-							<nuxt-link to="">
-								<h3>INIAD meets web</h3>
-								<p class="subtitle">
-									学内オンライン新歓イベント
-								</p>
-								<p>
-									<img class="thumbnail" src="/iniadmeetsweb.png" alt="">
+						<div v-for="n of 12" v-bind:key="n" class="teacup">
+							<p>
+								<span v-if="n % 2 === 0">
+									<img class="teacup-back" src="@/assets/img/teacup-pink-back.svg" alt="">
+									<img class="teacup-front" src="@/assets/img/teacup-pink-front.svg" alt="">
+								</span>
+								<span v-else>
 									<img class="teacup-back" src="@/assets/img/teacup-blue-back.svg" alt="">
 									<img class="teacup-front" src="@/assets/img/teacup-blue-front.svg" alt="">
-								</p>
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<h3>INIAD meets web</h3>
-								<p class="subtitle">
-									学内オンライン新歓イベント
-								</p>
-								<p>
-									<img class="thumbnail" src="/iniadmeetsweb.png" alt="">
-									<img class="teacup-back" src="@/assets/img/teacup-pink-back.svg" alt="">
-									<img class="teacup-front" src="@/assets/img/teacup-pink-front.svg" alt="">
-								</p>
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<h3>INIAD meets web</h3>
-								<p class="subtitle">
-									学内オンライン新歓イベント
-								</p>
-								<p>
-									<img class="thumbnail" src="/iniadmeetsweb.png" alt="">
-									<img class="teacup-back" src="@/assets/img/teacup-blue-back.svg" alt="">
-									<img class="teacup-front" src="@/assets/img/teacup-blue-front.svg" alt="">
-								</p>
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<h3>INIAD meets web</h3>
-								<p class="subtitle">
-									学内オンライン新歓イベント
-								</p>
-								<p>
-									<img class="thumbnail" src="/iniadmeetsweb.png" alt="">
-									<img class="teacup-back" src="@/assets/img/teacup-pink-back.svg" alt="">
-									<img class="teacup-front" src="@/assets/img/teacup-pink-front.svg" alt="">
-								</p>
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<h3>INIAD meets web</h3>
-								<p class="subtitle">
-									学内オンライン新歓イベント
-								</p>
-								<p>
-									<img class="thumbnail" src="/iniadmeetsweb.png" alt="">
-									<img class="teacup-back" src="@/assets/img/teacup-blue-back.svg" alt="">
-									<img class="teacup-front" src="@/assets/img/teacup-blue-front.svg" alt="">
-								</p>
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<h3>INIAD meets web</h3>
-								<p class="subtitle">
-									学内オンライン新歓イベント
-								</p>
-								<p>
-									<img class="thumbnail" src="/iniadmeetsweb.png" alt="">
-									<img class="teacup-back" src="@/assets/img/teacup-pink-back.svg" alt="">
-									<img class="teacup-front" src="@/assets/img/teacup-pink-front.svg" alt="">
-								</p>
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<h3>INIAD meets web</h3>
-								<p class="subtitle">
-									学内オンライン新歓イベント
-								</p>
-								<p>
-									<img class="thumbnail" src="/iniadmeetsweb.png" alt="">
-									<img class="teacup-back" src="@/assets/img/teacup-blue-back.svg" alt="">
-									<img class="teacup-front" src="@/assets/img/teacup-blue-front.svg" alt="">
-								</p>
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<h3>INIAD meets web</h3>
-								<p class="subtitle">
-									学内オンライン新歓イベント
-								</p>
-								<p>
-									<img class="thumbnail" src="/iniadmeetsweb.png" alt="">
-									<img class="teacup-back" src="@/assets/img/teacup-pink-back.svg" alt="">
-									<img class="teacup-front" src="@/assets/img/teacup-pink-front.svg" alt="">
-								</p>
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<img class="teacup-back" src="@/assets/img/teacup-blue-back.svg" alt="">
-								<img class="teacup-front" src="@/assets/img/teacup-blue-front.svg" alt="">
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<img class="teacup-back" src="@/assets/img/teacup-pink-back.svg" alt="">
-								<img class="teacup-front" src="@/assets/img/teacup-pink-front.svg" alt="">
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<img class="teacup-back" src="@/assets/img/teacup-blue-back.svg" alt="">
-								<img class="teacup-front" src="@/assets/img/teacup-blue-front.svg" alt="">
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<img class="teacup-back" src="@/assets/img/teacup-pink-back.svg" alt="">
-								<img class="teacup-front" src="@/assets/img/teacup-pink-front.svg" alt="">
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<img class="teacup-back" src="@/assets/img/teacup-blue-back.svg" alt="">
-								<img class="teacup-front" src="@/assets/img/teacup-blue-front.svg" alt="">
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<img class="teacup-back" src="@/assets/img/teacup-pink-back.svg" alt="">
-								<img class="teacup-front" src="@/assets/img/teacup-pink-front.svg" alt="">
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<img class="teacup-back" src="@/assets/img/teacup-blue-back.svg" alt="">
-								<img class="teacup-front" src="@/assets/img/teacup-blue-front.svg" alt="">
-							</nuxt-link>
-						</article>
-						<article>
-							<nuxt-link to="">
-								<img class="teacup-back" src="@/assets/img/teacup-pink-back.svg" alt="">
-								<img class="teacup-front" src="@/assets/img/teacup-pink-front.svg" alt="">
-							</nuxt-link>
-						</article>
+								</span>
+							</p>
+						</div>
 					</div>
 					<div class="teacups-ground" />
 				</div>
@@ -410,9 +274,12 @@ export default {
 			const vw = window.innerWidth / 100
 			return 25 * vw - ((25 * vw - 8.2 * vw) / (9.8 * vw - vw) * this.scrollY)
 		},
+		works () {
+			return this.$store.getters["works/getAll"]
+		},
 	},
 	mounted () {
-		this.loadWebFont()
+		// this.loadWebFont()
 		window.addEventListener("scroll", this.onScroll)
 		this.scrollY = window.scrollY
 
@@ -427,7 +294,7 @@ export default {
 			})
 		}, options)
 		observer.observe(this.$refs.works)
-		const teacups = this.$refs.works.getElementsByTagName("article")
+		const teacups = this.$refs.works.getElementsByClassName("teacup")
 		teacups.forEach((teacup, index) => {
 			const scrollPos = 0
 			const { position, width, isActive, fontSize } = this.getTeacupPosition(scrollPos, index)
@@ -447,11 +314,16 @@ export default {
 			/* global Ts */
 			Ts.loadFont()
 		},
+		openWorkModal () {
+			this.$modal.show(
+
+			)
+		},
 		onScroll (event) {
 			this.scrollY = window.scrollY
 
 			if (this.isWorksActive) {
-				const teacups = this.$refs.works.getElementsByTagName("article")
+				const teacups = this.$refs.works.getElementsByClassName("teacup")
 				teacups.forEach((teacup, index) => {
 					const scrollPos = Math.floor((-this.$refs.works.getBoundingClientRect().y >= 0) ? -this.$refs.works.getBoundingClientRect().y : 0)
 					const { position, width, isActive, fontSize } = this.getTeacupPosition(scrollPos, index)
@@ -465,22 +337,22 @@ export default {
 			}
 		},
 		getTeacupPosition (count, teacupNum) {
-			const longRadius = window.innerWidth * 1.1 / 2
+			const longRadius = window.innerWidth * 1.15 / 2
 			const shortRadius = window.innerHeight * 0.28 / 2
 
 			// スクロール位置 * 角速度 + 45°(円の8等分) * ティーカップ番号 - 90°(初期値を円の下にする)
-			const speed = 0.01
+			const speed = 0.005
 			const radian = count * -speed + 2 * Math.PI / 8 * teacupNum + Math.PI / 2 * 3
 
 			// 座標
 			const position = {
 				x: Math.floor(longRadius * Math.cos(radian)) + window.innerWidth / 100 * 5.2,
-				y: Math.floor(shortRadius * Math.sin(radian)) + shortRadius + window.innerHeight / 100 * 18,
+				y: Math.floor(shortRadius * Math.sin(radian)) + shortRadius + window.innerHeight / 100 * 13,
 			}
 
 			const viewPosition = { y: window.innerHeight / 100 * -30 }
 			const distance = Math.abs((position.y - viewPosition.y))
-			const width = 60 * Math.abs(viewPosition.y) / distance
+			const width = 50 * Math.abs(viewPosition.y) / distance
 			const fontSize = Math.floor(35 * Math.abs(viewPosition.y) / distance)
 			const isActive = -3 / 2 * Math.PI + 2 / 8 * Math.PI * teacupNum <= count * speed && count * speed < 1 / 2 * Math.PI + 2 / 8 * Math.PI * teacupNum
 			return { position, width, isActive, fontSize }
@@ -733,25 +605,27 @@ header {
 	.works-list {
 		padding: 0;
 
-		article {
+		.teacup {
 			position: absolute;
 
 			h3 {
 				position: absolute;
 				width: fit-content;
+				text-align: center;
 				bottom: 45%;
 				left: 50%;
 				transform: translateX(-63%);
 				z-index: 4;
 				font-size: 1.2em;
+				line-height: 1em;
 			}
 
 			p.subtitle {
 				position: absolute;
 				width: fit-content;
 				bottom: 65%;
-				left: 50%;
-				transform: translateX(-60%);
+				left: 45%;
+				transform: translateX(-50%);
 				z-index: 4;
 				font-size: 1em;
 			}
@@ -789,7 +663,7 @@ header {
 		background-size: 100% 100%;
 		background-repeat: no-repeat;
 		width: 160vw;
-		height: 55vh;
+		height: 50vh;
 	}
 }
 
@@ -1019,7 +893,7 @@ header {
 }
 
 footer {
-	background-color: #ad5a88;
+	background-color: $main-color;
 	color: #fff;
 	text-align: center;
 	padding: 1rem;
