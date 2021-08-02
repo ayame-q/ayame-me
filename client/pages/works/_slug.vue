@@ -1,14 +1,5 @@
 <template>
 	<div id="works-detail">
-		<header>
-			<nav>
-				<p>
-					<nuxt-link to="/">
-						×
-					</nuxt-link>
-				</p>
-			</nav>
-		</header>
 		<main>
 			<article>
 				<div class="meta">
@@ -46,6 +37,7 @@
 import marked from "marked"
 export default {
 	name: "WorkDetail",
+	scrollToTop: false,
 	computed: {
 		work () {
 			return this.$store.getters["works/getAll"].find((item) => {
@@ -81,48 +73,10 @@ p {
 }
 
 #works-detail {
-	header {
-		position: fixed;
-		top: 2vh;
-		right: 9vw;
-		z-index: 99;
-
-		a {
-			text-decoration: none;
-		}
-	}
-
 	main {
-		position: fixed;
-		width: 95vw;
-		height: 90vh;
-		left: 2.5vw;
-		bottom: 0;
-		margin-bottom: 8vh;
-		background-color: $board-color;
-		padding: 2.5vw calc(2.5vw + 4vw);
-
 		article {
 			height: 100%;
 			overflow-y: scroll;
-
-			&::before,
-			&::after {
-				content: "";
-				width: 4vw;
-				height: 98vh;
-				position: fixed;
-				bottom: 0;
-				background-color: $main-color;
-			}
-
-			&::before {
-				left: 2.5vw;
-			}
-
-			&::after {
-				right: 2.5vw;
-			}
 
 			.meta {
 				display: flex;
