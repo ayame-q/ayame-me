@@ -5,8 +5,8 @@
 				<div class="meta">
 					<div>
 						<div class="title-wrap">
-							<h1>{{ title }}</h1>
-							<p class="subtitle">
+							<h2>{{ title }}</h2>
+							<p v-if="work.subTitle" class="subtitle">
 								{{ work.subTitle }}
 							</p>
 						</div>
@@ -73,8 +73,9 @@ p {
 </style>
 
 <style lang="scss" scoped>
-h1 {
+h2 {
 	color: $text-color;
+	font-family: "A1ゴシック M", A1 Gothic M, sans-serif;
 }
 
 p {

@@ -614,8 +614,8 @@ header {
 				width: fit-content;
 				text-align: center;
 				bottom: 45%;
-				left: 50%;
-				transform: translateX(-63%);
+				left: 45%;
+				transform: translateX(-50%);
 				z-index: 4;
 				font-size: 1.2em;
 				line-height: 1em;
