@@ -54,6 +54,15 @@ export default {
 			return marked(this.work.text)
 		},
 	},
+	mounted () {
+		this.loadWebFont()
+	},
+	methods: {
+		loadWebFont () {
+			/* global Ts */
+			Ts.loadFont()
+		},
+	},
 }
 </script>
 

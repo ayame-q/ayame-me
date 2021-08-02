@@ -280,7 +280,7 @@ export default {
 		},
 	},
 	mounted () {
-		// this.loadWebFont()
+		this.loadWebFont()
 		window.addEventListener("scroll", this.onScroll)
 		this.scrollY = window.scrollY
 
