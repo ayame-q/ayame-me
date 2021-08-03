@@ -12,8 +12,17 @@ export default {
 		meta: [
 			{ charset: "utf-8" },
 			{ name: "viewport", content: "width=device-width, initial-scale=1" },
-			{ hid: "description", name: "description", content: "" },
+			{ hid: "description", name: "description", content: "Web & UI/UX Designer, Front-end & Web Engineer. 東洋大学情報連携学部(INIAD)3年 立松あやめのポートフォリオサイトです。" },
 			{ name: "format-detection", content: "telephone=no" },
+			{ hid: "keywords", name: "keywords", content: "Designer, Engineer, デザイナー, エンジニア" },
+			{ hid: "og:site_name", property: "og:site_name", content: "ayame.me" },
+			{ hid: "og:type", property: "og:type", content: "website" },
+			{ hid: "og:url", property: "og:url", content: "https://ayame.me/" },
+			{ hid: "og:title", property: "og:title", content: "ayame.me | Ayame Tatematsu Portfolio" },
+			{ hid: "og:description", property: "og:description", content: "Web & UI/UX Designer, Front-end & Web Engineer. 東洋大学情報連携学部(INIAD)3年 立松あやめのポートフォリオサイトです。" },
+			{ hid: "og:image", property: "og:image", content: "https://ayame.me/eyecatch.png" },
+			{ hid: "twitter:card", name: "twitter:card", content: "summary_large_image" },
+			{ hid: "twitter:site", name: "twitter:site", content: "@ayame_q" },
 		],
 		link: [
 			{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
