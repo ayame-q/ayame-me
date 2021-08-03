@@ -315,11 +315,6 @@ export default {
 			/* global Ts */
 			Ts.loadFont()
 		},
-		openWorkModal () {
-			this.$modal.show(
-
-			)
-		},
 		onScroll (event) {
 			this.scrollY = window.scrollY
 

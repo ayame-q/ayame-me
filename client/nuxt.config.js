@@ -19,13 +19,13 @@ export default {
 			{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
 		],
 		script: [
-			{ src: '//typesquare.com/3/tsst/script/ja/typesquare.js?60aa9f6540dc426583e049c2e90393a3&onload=false', charSet: 'utf-8' },
+			{ src: "//typesquare.com/3/tsst/script/ja/typesquare.js?60aa9f6540dc426583e049c2e90393a3&onload=false", charSet: "utf-8" },
 		],
 	},
 
 	// Global CSS: https://go.nuxtjs.dev/config-css
 	css: [
-		'@/assets/scss/_common.scss',
+		"@/assets/scss/_common.scss",
 	],
 
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -66,7 +66,7 @@ export default {
 		// https://go.nuxtjs.dev/axios
 		"@nuxtjs/axios",
 		// https://github.com/rigor789/vue-scrollto
-		'vue-scrollto/nuxt',
+		"vue-scrollto/nuxt",
 	],
 
 	// Axios module configuration: https://go.nuxtjs.dev/config-axios

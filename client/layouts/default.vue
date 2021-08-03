@@ -66,6 +66,11 @@ export default {
 	background-color: $board-color;
 	padding: 2.5vw calc(2.5vw + 4vw);
 
+	> * {
+		position: relative;
+		z-index: 1002;
+	}
+
 	&::before,
 	&::after {
 		content: "";
@@ -74,6 +79,7 @@ export default {
 		position: fixed;
 		bottom: 0;
 		background-color: $main-color;
+		z-index: 9999;
 	}
 
 	&::before {
@@ -82,11 +88,6 @@ export default {
 
 	&::after {
 		right: 2.5vw;
-	}
-
-	> * {
-		position: relative;
-		z-index: 1002;
 	}
 
 	.close {
