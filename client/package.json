@@ -28,6 +28,7 @@
 		"sass-loader": "^10.1.1",
 		"stylelint-config-recommended-scss": "^4.3.0",
 		"stylelint-scss": "^3.20.1",
+		"v-scroll-lock": "^1.3.1",
 		"vue-js-modal": "^2.0.0-rc.6",
 		"vue-scrollto": "^2.20.0"
 	},

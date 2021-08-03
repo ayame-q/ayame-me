@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<Home />
-		<div v-bind:class="{ modal: isModal, hidden: isIndex }">
+		<div v-scroll-lock="isModal" v-bind:class="{ modal: isModal, hidden: isIndex }">
 			<Nuxt />
 			<p class="close" v-on:click="closeModal">
 				×
