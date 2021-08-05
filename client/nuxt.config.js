@@ -14,7 +14,7 @@ export default {
 			{ name: "viewport", content: "width=device-width, initial-scale=1" },
 			{ hid: "description", name: "description", content: "Web & UI/UX Designer, Front-end & Web Engineer. 東洋大学情報連携学部(INIAD)3年 立松あやめのポートフォリオサイトです。" },
 			{ name: "format-detection", content: "telephone=no" },
-			{ hid: "keywords", name: "keywords", content: "Designer, Engineer, デザイナー, エンジニア" },
+			{ hid: "keywords", name: "keywords", content: "立松 あやめ" },
 			{ hid: "og:site_name", property: "og:site_name", content: "ayame.me" },
 			{ hid: "og:type", property: "og:type", content: "website" },
 			{ hid: "og:url", property: "og:url", content: "https://ayame.me/" },
