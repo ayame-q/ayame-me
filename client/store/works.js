@@ -420,10 +420,10 @@ export const state = () => ({
 					type: "image",
 					url: "/img/works/iniadfes3rd-signage-1.jpeg",
 				},
-				/* {
+				{
 					type: "youtube",
 					videoId: "_gHWJEj2R90",
-				}, */
+				},
 			],
 			skills: [
 				{
