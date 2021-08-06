@@ -186,7 +186,7 @@ export const state = () => ({
 				"買い物や外食のたびに毎回割り勘するのは面倒くさい！でもなあなあにすると喧嘩の原因に…を解消してくれるアプリです。\n" +
 				"その場でレシート写真を撮影してあとから揉める…をなくせるようにデザインしています。\n" +
 				"\n" +
-				"XD共有ページ: https://xd.adobe.com/view/df7c6a15-c9bb-44f1-b50b-5f99f00ecfcb-8a2f/?fullscreen",
+				"Adobe XDプロトタイプ: https://xd.adobe.com/view/df7c6a15-c9bb-44f1-b50b-5f99f00ecfcb-8a2f/?fullscreen",
 		},
 		{
 			uuid: "2ff680ce-4fd3-42ae-b914-334ca0c2325f",
@@ -405,7 +405,6 @@ export const state = () => ({
 				"記事を読むユーザー側だけでなく、コロナ禍の中でサークル活動を始動するにあたって、サークルとしてオンラインで活動できるように、推敲や校閲などの作業もサイト内で行えるように工夫しました。\n" +
 				"\n" +
 				"URL: https://iniad-wm.com/\n" +
-				"\n" +
 				"ソースコード: https://github.com/ayame-q/iniad-times",
 		},
 		{
@@ -489,6 +488,7 @@ export const state = () => ({
 			text: "1年生のとき、大学のチーム開発授業でわたしが在学している東洋大学情報連携学部(INIAD)の学生向け質問サイトINIAD Wizを3名で開発したものです。\n" +
 				"私は主要な機能の開発と、サイトデザイン等を担当しました。\n" +
 				"特に授業で困ったことを気軽に質問できるような、そんなサイトを目指してデザイン・開発しました。\n" +
+				"\n" +
 				"URL: https://wiz.iniad.net/",
 		},
 		{
@@ -534,7 +534,7 @@ export const state = () => ({
 				"友人が作ったサイトデザインを私はNuxt.jsでコーディングしました。\n" +
 				"大学の学内アカウントで認証することで面倒なデータの入力を減らし、メールアドレスの入力ミスなども防げるようになっており、サークル運営側としても手間がかからないよう申込と同時に自動で入会処理が行われるよう実装しました。\n" +
 				"\n" +
-				"URL: https://about.iniad-wm.com/" +
+				"URL: https://about.iniad-wm.com/\n" +
 				"ソースコード: https://github.com/ayame-q/iniad-times/tree/master/client/circle-site",
 		},
 		{
