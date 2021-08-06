@@ -22,9 +22,20 @@
 				</div>
 				<div class="content-wrap">
 					<div class="resources">
-						<p v-for="(resource, index) of work.resources" v-bind:key="index">
-							<img v-bind:src="resource.url" alt="">
-						</p>
+						<div v-for="(resource, index) of work.resources" v-bind:key="index">
+							<p v-if="resource.type === 'image'">
+								<img v-bind:src="resource.url" alt="">
+							</p>
+							<div v-if="resource.type === 'youtube'" class="youtube">
+								<iframe
+									v-bind:src="`https://www.youtube.com/embed/${resource.videoId}`"
+									title="YouTube video player"
+									frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+									allowfullscreen
+								/>
+							</div>
+						</div>
 					</div>
 					<div class="text" v-html="text" />
 				</div>
@@ -67,19 +78,13 @@ export default {
 </script>
 
 <style lang="scss">
-p {
-	margin: 1rem 0;
-}
+
 </style>
 
 <style lang="scss" scoped>
 h2 {
 	color: $text-color;
 	font-family: "A1ゴシック M", A1 Gothic M, sans-serif;
-}
-
-p {
-	margin: 1rem 0;
 }
 
 #works-detail {
@@ -133,13 +138,37 @@ p {
 				.resources {
 					width: 40%;
 
+					> div,
+					> p {
+						margin: 1rem 0;
+					}
+
 					img {
 						width: 100%;
+					}
+
+					.youtube {
+						position: relative;
+						width: 100%;
+						height: 0;
+						padding-top: 56.25%;
+
+						iframe {
+							position: absolute;
+							width: 100%;
+							height: 100%;
+							top: 0;
+							left: 0;
+						}
 					}
 				}
 
 				.text {
 					width: 55%;
+
+					&::v-deep p {
+						margin: 1rem 0;
+					}
 				}
 			}
 		}
