@@ -130,7 +130,7 @@ export const state = () => ({
 				"\"楽しいデザイン\"、\"人と人をつなぐデザイン\"といった価値観を込め、\n" +
 				"誰もが楽しめるそんな遊園地をモチーフに制作しました。\n" +
 				"\n" +
-				"URL: https://ayame.me/ (このページです)"
+				"URL: https://ayame.me/ (このページです)",
 		},
 		{
 			uuid: "7a48c92e-4c83-4024-a45c-6e07bdbe52ca",
@@ -247,7 +247,7 @@ export const state = () => ({
 				"自分の\"得意\"を気軽に投稿でき、気軽におしゃべりできる、\n" +
 				"そんなサイトを目指してデザインしました。\n" +
 				"\n" +
-				"Adobe XD プロトタイプ: https://xd.adobe.com/view/4ccaa365-443d-4ccc-8718-1c16d50e8c33-1999/?fullscreen"
+				"Adobe XD プロトタイプ: https://xd.adobe.com/view/4ccaa365-443d-4ccc-8718-1c16d50e8c33-1999/?fullscreen",
 		},
 		{
 			uuid: "67d29d28-6877-6cbe-fdf2-51e332b614c8",
@@ -298,7 +298,8 @@ export const state = () => ({
 			text: "2年生のとき、大学のデザイン授業の課題でAPIを用いた天気予報サイトを作成しました。\n" +
 				"10代〜20代の女性をターゲットに朝通勤通学前に見てもらうことを想定したサイトです。\n" +
 				"\n" +
-				"URL: https://fleuve-mode.herokuapp.com (スマートフォンのみ)",
+				"URL: https://fleuve-mode.herokuapp.com (スマートフォンのみ)\n" +
+				"ソースコード: https://github.com/ayame-q/fleuve-mode",
 		},
 		{
 			uuid: "bac61fa0-c4a5-4ffa-8742-e68c40f3424a",
