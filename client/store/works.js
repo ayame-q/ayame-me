@@ -78,7 +78,59 @@ export const state = () => ({
 				"\n" +
 				"特に今回はチームを率いてうまくみんなで共に作り上げることが\n" +
 				"出来たと感じており、何よりも人と連携して作り上げる\n" +
-				"楽しさを知ることが出来ました。",
+				"楽しさを知ることが出来ました。\n" +
+				"\n" +
+				"ソースコード: https://github.com/ayame-q/iniad-meets-web",
+		},
+		{
+			uuid: "36283266-6204-4bad-8e99-d79a4ecc1ec8",
+			slug: "portfolio-site",
+			title: "ayame.me",
+			subTitle: "\"楽しい\"ポートフォリオサイト",
+			createPeriod: "2週間 (2021/7)",
+			thumbnail: "/img/works/portfolio-thumbnail.png",
+			resources: [
+				{
+					type: "image",
+					url: "/img/works/portfolio-1.png",
+				},
+				{
+					type: "image",
+					url: "/img/works/portfolio-2.png",
+				},
+				{
+					type: "image",
+					url: "/img/works/portfolio-3.png",
+				},
+			],
+			skills: [
+				{
+					uuid: "da7ffcb3-3857-4526-b2a4-f8498d141549",
+					name: "Illustrator",
+					img: "/img/skills/illustrator.svg",
+				},
+				{
+					uuid: "5e55c215-5a43-ab9b-46ea-eb19ea4ebccc",
+					name: "Vue/Nuxt.js",
+					img: "/img/skills/vuejs.svg",
+				},
+				{
+					uuid: "0d166494-102d-4636-96db-fb359368b5ed",
+					name: "JavaScript",
+					img: "/img/skills/javascript.svg",
+				},
+				{
+					uuid: "7cf4d657-bbfd-45bd-857a-66d8ea26479d",
+					name: "HTML5/CSS3",
+					img: "/img/skills/html-css.svg",
+				},
+			],
+			text: "自分自身のポートフォリオサイトです。\n" +
+				"今までに自分が作ってきた作品で特に大切にしてきた\n" +
+				"\"楽しいデザイン\"、\"人と人をつなぐデザイン\"といった価値観を込め、\n" +
+				"誰もが楽しめるそんな遊園地をモチーフに制作しました。\n" +
+				"\n" +
+				"URL: https://ayame.me/ (このページです)"
 		},
 		{
 			uuid: "7a48c92e-4c83-4024-a45c-6e07bdbe52ca",
@@ -135,6 +187,67 @@ export const state = () => ({
 				"その場でレシート写真を撮影してあとから揉める…をなくせるようにデザインしています。\n" +
 				"\n" +
 				"XD共有ページ: https://xd.adobe.com/view/df7c6a15-c9bb-44f1-b50b-5f99f00ecfcb-8a2f/?fullscreen",
+		},
+		{
+			uuid: "2ff680ce-4fd3-42ae-b914-334ca0c2325f",
+			slug: "iniad-stock",
+			title: "INIAD Stock",
+			subTitle: "学内専用知識共有交流サイト",
+			createPeriod: "2ヶ月 (2021/6 〜 2021/7)",
+			thumbnail: "/img/works/iniadstock-1.png",
+			resources: [
+				{
+					type: "image",
+					url: "/img/works/iniadstock-1.png",
+				},
+				{
+					type: "image",
+					url: "/img/works/iniadstock-2.png",
+				},
+				{
+					type: "image",
+					url: "/img/works/iniadstock-3.png",
+				},
+				{
+					type: "image",
+					url: "/img/works/iniadstock-4.png",
+				},
+				{
+					type: "image",
+					url: "/img/works/iniadstock-5.png",
+				},
+				{
+					type: "image",
+					url: "/img/works/iniadstock-6.png",
+				},
+				{
+					type: "image",
+					url: "/img/works/iniadstock-7.png",
+				},
+				{
+					type: "image",
+					url: "/img/works/iniadstock-8.png",
+				},
+			],
+			skills: [
+				{
+					uuid: "a6a96aae-ee05-4572-84d0-156499a7f0d5",
+					name: "XD",
+					img: "/img/skills/xd.svg",
+				},
+				{
+					uuid: "da7ffcb3-3857-4526-b2a4-f8498d141549",
+					name: "Illustrator",
+					img: "/img/skills/illustrator.svg",
+				},
+			],
+			text: "大学のデザイン演習授業で学生向け情報共有交流サイト「INIAD Stock」のデザインを作成しました。\n" +
+				"私の通う大学にはいろいろなすごい知識を持っている人がたくさんいる中で、\n" +
+				"お互いの知識を共有し合うことで学生みんながそれぞれを高めあうことができるのではないかと考え、\n" +
+				"自分の\"得意\"を気軽に投稿でき、気軽におしゃべりできる、\n" +
+				"そんなサイトを目指してデザインしました。\n" +
+				"\n" +
+				"Adobe XD プロトタイプ: https://xd.adobe.com/view/4ccaa365-443d-4ccc-8718-1c16d50e8c33-1999/?fullscreen"
 		},
 		{
 			uuid: "67d29d28-6877-6cbe-fdf2-51e332b614c8",
@@ -290,7 +403,9 @@ export const state = () => ({
 				"\n" +
 				"記事を読むユーザー側だけでなく、コロナ禍の中でサークル活動を始動するにあたって、サークルとしてオンラインで活動できるように、推敲や校閲などの作業もサイト内で行えるように工夫しました。\n" +
 				"\n" +
-				"URL: https://iniad-wm.com/",
+				"URL: https://iniad-wm.com/\n" +
+				"\n" +
+				"ソースコード: https://github.com/ayame-q/iniad-times",
 		},
 		{
 			uuid: "73b66888-54c8-4eef-9e53-593b223f1d48",
@@ -418,7 +533,8 @@ export const state = () => ({
 				"友人が作ったサイトデザインを私はNuxt.jsでコーディングしました。\n" +
 				"大学の学内アカウントで認証することで面倒なデータの入力を減らし、メールアドレスの入力ミスなども防げるようになっており、サークル運営側としても手間がかからないよう申込と同時に自動で入会処理が行われるよう実装しました。\n" +
 				"\n" +
-				"URL: https://about.iniad-wm.com/",
+				"URL: https://about.iniad-wm.com/" +
+				"ソースコード: https://github.com/ayame-q/iniad-times/tree/master/client/circle-site",
 		},
 		{
 			uuid: "e3b03c1f-57ac-48a9-82e5-ed2175ebd839",
