@@ -125,7 +125,7 @@
 				</section>
 				<div class="coaster-rail" />
 			</div>
-			<section id="works" ref="works" style="height: 230vh;">
+			<section id="works" ref="works" style="height: 260vh;">
 				<div class="content" v-bind:class="{active: isWorksActive}">
 					<h2>Works</h2>
 					<div class="works-list">
