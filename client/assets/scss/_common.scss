@@ -35,3 +35,31 @@ h2 {
 	color: $title-color;
 	font-family: "ぺんぱる", Penpal, sans-serif;
 }
+
+@keyframes balloon-scroll-top {
+	0% {
+		margin-top: 0;
+	}
+
+	100% {
+		margin-top: 2vh;
+	}
+}
+
+@keyframes balloon-nav {
+	0% {
+		margin-top: 0;
+	}
+
+	100% {
+		margin-top: 0.5vmin;
+	}
+}
+
+.balloon {
+	animation: balloon-nav 2s ease-in-out infinite alternate;
+
+	&:nth-child(2n + 1) {
+		animation-delay: 2s;
+	}
+}
