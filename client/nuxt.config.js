@@ -85,7 +85,10 @@ export default {
 
 	// Google gtag configuration: https://github.com/nuxt-community/google-gtag-module
 	"google-gtag": {
-		id: "G-1KGRB4XE9H",
+		id: "UA-97540933-2",
+		additionalAccounts: [{
+			id: 'G-M9BBX4E3PP',
+		}]
 	},
 
 	// Build Configuration: https://go.nuxtjs.dev/config-build
