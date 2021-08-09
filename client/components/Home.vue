@@ -27,10 +27,6 @@ export default {
 			scrollY: 0,
 		}
 	},
-	head: {
-		title: "ayame.me | Ayame Tatematsu Portfolio",
-		titleTemplate: "",
-	},
 	computed: {
 		works () {
 			return this.$store.getters["works/getAll"]

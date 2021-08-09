@@ -7,5 +7,9 @@
 <script>
 export default {
 	scrollToTop: false,
+	head: {
+		title: "ayame.me | Ayame Tatematsu Portfolio",
+		titleTemplate: "",
+	},
 }
 </script>
