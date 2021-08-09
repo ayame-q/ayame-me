@@ -1,7 +1,7 @@
 <template>
 	<div id="index">
 		<header-nav v-bind:scroll-y="scrollY" />
-		<main>
+		<main ref="main">
 			<first-look />
 			<about-me />
 			<skills-list />
@@ -36,6 +36,7 @@ export default {
 		this.loadWebFont()
 		window.addEventListener("scroll", this.onScroll)
 		this.scrollY = window.scrollY
+		this.trackScroll()
 	},
 	beforeDestroy () {
 		window.removeEventListener("scroll", this.onScroll)
@@ -47,6 +48,25 @@ export default {
 		},
 		onScroll (event) {
 			this.scrollY = window.scrollY
+		},
+		trackScroll () {
+			const options = {
+				root: null,
+				rootMargin: "90% 0% -90% 0%",
+				threshold: 0,
+			}
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						const elementName = entry.target.getAttribute("id")
+						this.$gtag("event", `show_${elementName}`, {})
+					}
+				})
+			}, options)
+			const sectionElements = this.$refs.main.getElementsByTagName("section")
+			sectionElements.forEach((element) => {
+				observer.observe(element)
+			})
 		},
 	},
 }
