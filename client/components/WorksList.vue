@@ -53,7 +53,7 @@ export default {
 	watch: {
 		scrollY () {
 			if (this.isWorksActive) {
-				console.log((-this.$refs.works.getBoundingClientRect().y >= 0) ? -this.$refs.works.getBoundingClientRect().y : 0)
+				// console.log((-this.$refs.works.getBoundingClientRect().y >= 0) ? -this.$refs.works.getBoundingClientRect().y : 0)
 				const teacups = this.$refs.works.getElementsByClassName("teacup")
 				teacups.forEach((teacup, index) => {
 					const scrollPos = Math.floor((-this.$refs.works.getBoundingClientRect().y >= 0) ? -this.$refs.works.getBoundingClientRect().y : 0)
