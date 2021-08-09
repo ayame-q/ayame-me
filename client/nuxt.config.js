@@ -76,10 +76,17 @@ export default {
 		"@nuxtjs/axios",
 		// https://github.com/rigor789/vue-scrollto
 		"vue-scrollto/nuxt",
+		// https://github.com/nuxt-community/google-gtag-module
+		'@nuxtjs/google-gtag',
 	],
 
 	// Axios module configuration: https://go.nuxtjs.dev/config-axios
 	axios: {},
+
+	// Google gtag configuration: https://github.com/nuxt-community/google-gtag-module
+	"google-gtag": {
+		id: "G-1KGRB4XE9H",
+	},
 
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {},
