@@ -254,7 +254,7 @@ export const state = () => ({
 			slug: "fleuve-mode",
 			title: "fleuve mode",
 			subTitle: "ゆめかわいい天気予報サイト",
-			createPeriod: "5ヶ月 (2020/12〜2021/4)",
+			createPeriod: "2ヶ月 (2020/6〜2020/7)",
 			thumbnail: "/img/works/fleuvemode-1.png",
 			resources: [
 				{
