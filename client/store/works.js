@@ -193,7 +193,7 @@ export const state = () => ({
 			slug: "iniad-stock",
 			title: "INIAD Stock",
 			subTitle: "学内専用知識共有交流サイト",
-			createPeriod: "2ヶ月 (2021/6 〜 2021/7)",
+			createPeriod: "3週間 (2021/6 〜 2021/7)",
 			thumbnail: "/img/works/iniadstock-1.png",
 			resources: [
 				{
