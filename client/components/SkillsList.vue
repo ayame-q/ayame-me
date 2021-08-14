@@ -4,14 +4,14 @@
 			<h2>Skills</h2>
 		</div>
 		<ul>
-			<li style="top: calc(2.5vw + 37.5vw); left: 7vw; width: 18.5vw;">
-				<nuxt-link to="">
-					<img src="@/assets/img/coaster-vue.svg" alt="Vue/Nuxt.js">
-				</nuxt-link>
-			</li>
-			<li style="top: calc(2.5vw + 33.5vw); left: 28vw; width: 18vw;">
+			<li style="top: calc(2.5vw + 39.5vw); left: 7vw; width: 18.5vw;">
 				<nuxt-link to="">
 					<img src="@/assets/img/coaster-illustrator.svg" alt="Illustrator">
+				</nuxt-link>
+			</li>
+			<li style="top: calc(2.5vw + 34.6vw); left: 28vw; width: 18vw;">
+				<nuxt-link to="">
+					<img src="@/assets/img/coaster-vue.svg" alt="Vue/Nuxt.js">
 				</nuxt-link>
 			</li>
 			<li style="top: calc(2.5vw + 27.2vw); left: 48vw; width: 17vw;">
