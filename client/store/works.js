@@ -28,6 +28,34 @@ export const state = () => ({
 					type: "image",
 					url: "/img/works/meetsweb-5.png",
 				},
+				{
+					type: "image",
+					url: "/img/works/meetsweb-6.png",
+				},
+				{
+					type: "image",
+					url: "/img/works/meetsweb-7.png",
+				},
+				{
+					type: "youtube",
+					videoId: "0Ec9FXBfRcc",
+				},
+				{
+					type: "image",
+					url: "/img/works/meetsweb-8.png",
+				},
+				{
+					type: "image",
+					url: "/img/works/meetsweb-9.png",
+				},
+				{
+					type: "image",
+					url: "/img/works/meetsweb-10.png",
+				},
+				{
+					type: "image",
+					url: "/img/works/meetsweb-11.png",
+				},
 			],
 			skills: [
 				{
