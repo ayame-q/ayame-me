@@ -389,7 +389,7 @@ export const state = () => ({
 			slug: "iniad-times",
 			title: "INIAD Times",
 			subTitle: "学内ニュースサイト",
-			createPeriod: "制作期間: 1週間 (2020/9)",
+			createPeriod: "2週間 (2020/9)",
 			thumbnail: "/img/works/iniadtimes-1.png",
 			resources: [
 				{
