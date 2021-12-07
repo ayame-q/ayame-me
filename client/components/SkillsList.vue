@@ -4,12 +4,12 @@
 			<h2>Skills</h2>
 		</div>
 		<ul>
-			<li style="top: calc(2.5vw + 39.5vw); left: 7vw; width: 18.5vw;">
+			<li style="top: calc(2.5vw + 39vw); left: 7vw; width: 18.5vw;">
 				<nuxt-link to="">
 					<img src="@/assets/img/coaster-illustrator.svg" alt="Illustrator">
 				</nuxt-link>
 			</li>
-			<li style="top: calc(2.5vw + 34.6vw); left: 28vw; width: 18vw;">
+			<li style="top: calc(2.5vw + 34.3vw); left: 28vw; width: 18vw;">
 				<nuxt-link to="">
 					<img src="@/assets/img/coaster-vue.svg" alt="Vue/Nuxt.js">
 				</nuxt-link>
@@ -39,7 +39,7 @@
 					<img src="@/assets/img/coaster-xd.svg" alt="XD">
 				</nuxt-link>
 			</li>
-			<li style="top: calc(2.5vw - 0.8vw); left: 47vw; width: 11vw;">
+			<li style="top: calc(2.5vw - 0.7vw); left: 47vw; width: 11vw;">
 				<nuxt-link to="">
 					<img src="@/assets/img/coaster-python.svg" alt="Python">
 				</nuxt-link>
