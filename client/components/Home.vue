@@ -64,7 +64,7 @@ export default {
 				})
 			}, options)
 			const sectionElements = this.$refs.main.getElementsByTagName("section")
-			sectionElements.forEach((element) => {
+			Array.prototype.forEach.call(sectionElements, (element) => {
 				observer.observe(element)
 			})
 		},

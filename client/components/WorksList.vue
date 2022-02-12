@@ -81,7 +81,7 @@ export default {
 		}, options)
 		observer.observe(this.$refs.works)
 		const teacups = this.$refs.works.getElementsByClassName("teacup")
-		teacups.forEach((teacup, index) => {
+		Array.prototype.forEach.call(teacups, (teacup, index) => {
 			const scrollPos = 0
 			const { position, width, isActive, fontSize } = this.getTeacupPosition(scrollPos, index)
 			teacup.style.bottom = position.y + "px"
