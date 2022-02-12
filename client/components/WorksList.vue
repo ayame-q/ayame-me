@@ -43,6 +43,8 @@ export default {
 	name: "WorksList",
 	props: {
 		scrollY: Number,
+		windowWidth: Number,
+		windowHeight: Number,
 		works: Array,
 	},
 	data () {
@@ -53,19 +55,14 @@ export default {
 	watch: {
 		scrollY () {
 			if (this.isWorksActive) {
-				// console.log((-this.$refs.works.getBoundingClientRect().y >= 0) ? -this.$refs.works.getBoundingClientRect().y : 0)
-				const teacups = this.$refs.works.getElementsByClassName("teacup")
-				teacups.forEach((teacup, index) => {
-					const scrollPos = Math.floor((-this.$refs.works.getBoundingClientRect().y >= 0) ? -this.$refs.works.getBoundingClientRect().y : 0)
-					const { position, width, isActive, fontSize } = this.getTeacupPosition(scrollPos, index)
-					teacup.style.bottom = position.y + "px"
-					teacup.style.left = position.x + "px"
-					teacup.style.width = width + "vw"
-					teacup.style.zIndex = (teacups.length - index).toString()
-					teacup.style.display = ((isActive) ? "block" : "none")
-					teacup.style.fontSize = fontSize + "px"
-				})
+				this.updateTeacup()
 			}
+		},
+		windowWidth () {
+			this.updateTeacup()
+		},
+		windowHeight () {
+			this.updateTeacup()
 		},
 	},
 	mounted () {
@@ -93,9 +90,23 @@ export default {
 		})
 	},
 	methods: {
+		updateTeacup () {
+			// console.log((-this.$refs.works.getBoundingClientRect().y >= 0) ? -this.$refs.works.getBoundingClientRect().y : 0)
+			const teacups = this.$refs.works.getElementsByClassName("teacup")
+			Array.prototype.forEach.call(teacups, (teacup, index) => {
+				const scrollPos = Math.floor((-this.$refs.works.getBoundingClientRect().y >= 0) ? -this.$refs.works.getBoundingClientRect().y : 0)
+				const { position, width, isActive, fontSize } = this.getTeacupPosition(scrollPos, index)
+				teacup.style.bottom = position.y + "px"
+				teacup.style.left = position.x + "px"
+				teacup.style.width = width + "vw"
+				teacup.style.zIndex = (teacups.length - index).toString()
+				teacup.style.display = ((isActive) ? "block" : "none")
+				teacup.style.fontSize = fontSize + "px"
+			})
+		},
 		getTeacupPosition (count, teacupNum) {
-			const longRadius = window.innerWidth * 1.15 / 2
-			const shortRadius = window.innerHeight * 0.28 / 2
+			const longRadius = this.windowWidth * 1.15 / 2
+			const shortRadius = this.windowHeight * 0.28 / 2
 
 			// スクロール位置 * 角速度 + 45°(円の8等分) * ティーカップ番号 - 90°(初期値を円の下にする)
 			const speed = 0.005
@@ -103,14 +114,14 @@ export default {
 
 			// 座標
 			const position = {
-				x: Math.floor(longRadius * Math.cos(radian)) + window.innerWidth / 100 * 5.2,
-				y: Math.floor(shortRadius * Math.sin(radian)) + shortRadius + window.innerHeight / 100 * 13,
+				x: Math.floor(longRadius * Math.cos(radian)) + this.windowWidth / 100 * 5.2,
+				y: Math.floor(shortRadius * Math.sin(radian)) + shortRadius + this.windowHeight / 100 * 13,
 			}
 
-			const viewPosition = { y: window.innerHeight / 100 * -30 }
+			const viewPosition = { y: this.windowHeight / 100 * -30 }
 			const distance = Math.abs((position.y - viewPosition.y))
 			const width = 50 * Math.abs(viewPosition.y) / distance
-			const fontSize = Math.floor((window.innerWidth / 100 * 2.3) * Math.abs(viewPosition.y) / distance)
+			const fontSize = Math.floor((this.windowWidth / 100 * 2.3) * Math.abs(viewPosition.y) / distance)
 			const isActive = -3 / 2 * Math.PI + 2 / 8 * Math.PI * teacupNum <= count * speed && count * speed < 1 / 2 * Math.PI + 2 / 8 * Math.PI * teacupNum
 			return { position, width, isActive, fontSize }
 		},

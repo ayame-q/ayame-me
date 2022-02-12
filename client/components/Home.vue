@@ -5,7 +5,7 @@
 			<first-look />
 			<about-me />
 			<skills-list />
-			<works-list v-bind:works="works" v-bind:scroll-y="scrollY" />
+			<works-list v-bind:works="works" v-bind:scroll-y="scrollY" v-bind:window-width="windowWidth" v-bind:window-height="windowHeight" />
 			<awards-list />
 			<contacts />
 		</main>
@@ -25,6 +25,8 @@ export default {
 	data () {
 		return {
 			scrollY: 0,
+			windowWidth: 0,
+			windowHeight: 0,
 		}
 	},
 	computed: {
@@ -35,7 +37,9 @@ export default {
 	mounted () {
 		this.loadWebFont()
 		window.addEventListener("scroll", this.onScroll)
+		window.addEventListener("resize", this.onResizeWindow)
 		this.scrollY = window.scrollY
+		this.onResizeWindow()
 		this.trackScroll()
 	},
 	beforeDestroy () {
@@ -67,6 +71,10 @@ export default {
 			Array.prototype.forEach.call(sectionElements, (element) => {
 				observer.observe(element)
 			})
+		},
+		onResizeWindow () {
+			this.windowWidth = window.innerWidth
+			this.windowHeight = window.innerHeight
 		},
 	},
 }
