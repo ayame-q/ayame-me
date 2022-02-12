@@ -9,7 +9,7 @@
 					<img src="@/assets/img/ayame-tatematsu.svg" alt="Ayame Tatematsu">
 				</h1>
 				<p class="tag-line">
-					新しい”普通”を、みんなで
+					デザインとITで、よりよい”日常”を
 				</p>
 				<p class="scroll-down">
 					<img src="@/assets/img/scroll-down.svg" alt="Scroll Down">
