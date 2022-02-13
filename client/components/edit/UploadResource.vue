@@ -1,25 +1,64 @@
 <template>
-	<div>
-		<!-- PDFファイル選択 -->
-		<input
-			type="file"
-			accept="application/pdf"
-			v-on:change.prevent="uploadPdf"
-		>
-
-		<!-- レンダリング用canvas -->
-		<canvas ref="canvas" />
+	<div class="drop-wrap">
+		<div
+			class="drop-area"
+			v-on:dragover.prevent
+			v-on:drop.prevent="dropFiles"
+		/>
+		<canvas ref="canvas" class="pdf-render" />
 	</div>
 </template>
 
 <script>
 import PDFJS from "pdfjs-dist"
 export default {
+	props: {
+		value: {
+			type: Array,
+			default () { return [] },
+		},
+	},
+	data () {
+		return {
+			resources: [],
+		}
+	},
+	created () {
+		this.resources = this.value
+	},
 	methods: {
-		async uploadPdf (e) {
+		dropFiles (event) {
+			const files = [...event.dataTransfer.files]
+			files.forEach((file) => {
+				switch (file.type) {
+				case "application/pdf":
+					this.uploadPdf(file)
+					break
+				case "image/png":
+				case "image/jpeg":
+				case "image/svg+xml":
+					this.uploadImage(file)
+					break
+				default:
+					// eslint-disable-next-line no-console
+					console.error("Unknown file type.", file.type)
+				}
+			})
+		},
+		async uploadImage (file) {
+			const formData = new FormData()
+			formData.append("file", file)
+			const response = await this.$axios.post("http://localhost/api/image/", formData)
+			this.resources.push({
+				type: "image",
+				url: response.data.url,
+			})
+			this.$emit("input", this.resources)
+		},
+		async uploadPdf (file) {
 			const MAX_PORTFOLIO_PDF_IMAGE_WIDTH = 1920
 			// PDFファイルデータをArrayBuffer型で取得
-			const fileData = await this.readFileAsync(e.target.files[0])
+			const fileData = await this.readFileAsync(file)
 
 			// PDFファイルのパース
 			const pdf = await PDFJS.getDocument({
@@ -60,13 +99,7 @@ export default {
 				const imageFile = new File([blob], "image.png", {
 					lastModified: new Date().getTime(),
 				})
-
-				// multipart/form-data形式でアップロード
-				// ここはアップロード先のAPIの仕様によって変わります
-				const formData = new FormData()
-				formData.append("image_file", imageFile)
-				console.log(imageFile)
-				// await this.$axios.post("APIのエンドポイント", formData)
+				await this.uploadImage(imageFile)
 			}
 		},
 		readFileAsync (file) {
@@ -82,3 +115,30 @@ export default {
 	},
 }
 </script>
+<style lang="scss" scoped>
+.drop-wrap {
+	width: 100%;
+	position: relative;
+
+	&::before {
+		content: "";
+		display: block;
+		padding-top: calc(100% / 16 * 9);
+	}
+
+	.drop-area {
+		width: 100%;
+		height: 100%;
+		background-color: $main-color;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	.pdf-render {
+		position: absolute;
+		visibility: hidden;
+		z-index: -99;
+	}
+}
+</style>
