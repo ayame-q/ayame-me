@@ -40,7 +40,6 @@ export default {
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
 	plugins: [
 		{ src: "@/plugins/v-scroll-lock.client.js", mode: "client" },
-		{ src: "@/plugins/vue-contenteditable.js" }
 	],
 
 	// Auto import components: https://go.nuxtjs.dev/config-components
