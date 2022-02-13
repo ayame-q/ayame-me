@@ -1,0 +1,22 @@
+version: "3"
+services:
+  nodejs:
+    volumes:
+      - "./client/content:/usr/src/app/content"
+      - "./client/static/img/content:/usr/src/app/img/content"
+  express:
+    build: server
+    env_file:
+      - ".env"
+    volumes:
+      - "./client/content:/usr/src/app/content"
+      - "./client/static/img/content:/usr/src/app/img"
+      - "./server/src:/usr/src/app/src"
+    environment:
+      - "PORT=8000"
+      - "CONTENT_PATH=./content"
+      - "IMAGE_PATH=./img"
+      - "IMAGE_URL=/img/content/"
+  nginx:
+    links:
+      - express
