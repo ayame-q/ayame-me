@@ -5,14 +5,14 @@
 				<div>
 					<div class="title-wrap">
 						<h2>
-							{{ title }}
+							<ContentEditable v-model="work.title" v-bind:contenteditable="isEditable" tag="span" placeholder="タイトル" />
 						</h2>
 						<p v-if="value.subTitle" class="subtitle">
-							{{ value.subTitle }}
+							<ContentEditable v-model="work.subTitle" v-bind:contenteditable="isEditable" tag="span" placeholder="サブタイトル" />
 						</p>
 					</div>
 					<p class="create-period">
-						制作期間: {{ value.createPeriod }}
+						制作期間: <ContentEditable v-model="work.createPeriod" v-bind:contenteditable="isEditable" tag="span" v-bind:no-n-l="true" placeholder="nヶ月 (yyyy/mm 〜 yyyy/mm)" />
 					</p>
 				</div>
 				<ul class="skills">
@@ -37,6 +37,7 @@
 							/>
 						</div>
 					</div>
+					<UploadResource v-model="work.resources" />
 				</div>
 				<div class="text" v-html="text" />
 			</div>
@@ -46,28 +47,37 @@
 
 <script>
 import marked from "marked"
+import ContentEditable from "~/components/edit/ContentEditable"
+import UploadResource from "~/components/edit/UploadResource"
 export default {
 	name: "Work",
+	components: { UploadResource, ContentEditable },
 	props: {
 		value: {
 			type: Object,
 			default () {
 				return {
-					slug: null,
-					title: null,
-					subTitle: null,
-					createPeriod: null,
-					thumbnail: null,
+					slug: "",
+					title: "",
+					subTitle: "",
+					createPeriod: "",
+					thumbnail: "",
 					skills: [],
 					resources: [],
-					text: null,
+					text: "",
 				}
+			},
+		},
+		isEditable: {
+			type: Boolean,
+			default () {
+				return false
 			},
 		},
 	},
 	data () {
 		return {
-			localWork: {},
+			work: {},
 		}
 	},
 	computed: {
@@ -90,7 +100,7 @@ export default {
 		},
 	},
 	created () {
-		this.localWork = { ...this.value }
+		this.work = { ...this.value }
 	},
 	mounted () {
 		this.loadWebFont()
@@ -128,6 +138,10 @@ h2 {
 					p.subtitle {
 						margin: 0;
 						margin-left: 0.5em;
+
+						span {
+							margin: 0 0.2em;
+						}
 
 						&::before,
 						&::after {
