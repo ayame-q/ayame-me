@@ -115,7 +115,6 @@ h2 {
 	main {
 		article {
 			height: 100%;
-			overflow-y: scroll;
 
 			.meta {
 				display: flex;
