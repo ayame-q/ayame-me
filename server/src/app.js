@@ -23,14 +23,16 @@ const port = process.env.PORT
 app.use(express.json())
 
 app.get("/health_check", (req, res) => {
+	console.log(`[${req.method}: ${req.path}]`)
 	res.status(200).send()
 })
 
 app.post("/works/:slug", (req, res, next) => {
-	console.log(`[/works/${req.params.slug}`, req.body)
-	fs.writeFile(`${contentPath}/works/${req.params.slug}.json`, JSON.stringify(req.body), "utf8")
+	const path = `${contentPath}/works/${req.params.slug}.json`
+	console.log(`[${req.method}: ${req.path}]`, path)
+	fs.writeFile(path, JSON.stringify(req.body), "utf8")
 		.then(() => {
-			return fs.readFile(`${contentPath}/${req.params.slug}.json`, "utf8")
+			return fs.readFile(path, "utf8")
 		})
 		.then(content => {
 			res.json(JSON.parse(content))
@@ -41,9 +43,11 @@ app.post("/works/:slug", (req, res, next) => {
 })
 
 app.put("/works/:slug", (req, res, next) => {
-	fs.writeFile(`${contentPath}/works/${req.params.slug}.json`, JSON.stringify(req.body), "utf8")
+	const path = `${contentPath}/works/${req.params.slug}.json`
+	console.log(`[${req.method}: ${req.path}]`, path)
+	fs.writeFile(path, JSON.stringify(req.body), "utf8")
 		.then(() => {
-			return fs.readFile(`${contentPath}/${req.params.slug}.json`, "utf8")
+			return fs.readFile(path, "utf8")
 		})
 		.then(content => {
 			res.json(JSON.parse(content))
@@ -54,13 +58,15 @@ app.put("/works/:slug", (req, res, next) => {
 })
 
 app.patch("/works/:slug", (req, res, next) => {
-	fs.readFile(`${contentPath}/works/${req.params.slug}.json`, "utf8")
+	const path = `${contentPath}/works/${req.params.slug}.json`
+	console.log(`[${req.method}: ${req.path}]`, path)
+	fs.readFile(path, "utf8")
 		.then(content => {
 			const data = Object.assign(JSON.parse(content), req.body)
-			return fs.writeFile(`${contentPath}/${req.params.slug}.json`, JSON.stringify(data), "utf8")
+			return fs.writeFile(path, JSON.stringify(data), "utf8")
 		})
 		.then(() => {
-			return fs.readFile(`${contentPath}/${req.params.slug}.json`, "utf8")
+			return fs.readFile(path, "utf8")
 		})
 		.then(content => {
 			res.json(JSON.parse(content))
@@ -71,6 +77,8 @@ app.patch("/works/:slug", (req, res, next) => {
 })
 
 app.post("/image/", upload.single("file"), (req, res) => {
+	const path = req.file.path
+	console.log(`[${req.method}: ${req.path}]`, path)
 	res.json({
 		"type": "image",
 		"url": imageUrl + req.file.filename
@@ -79,6 +87,7 @@ app.post("/image/", upload.single("file"), (req, res) => {
 
 app.delete("/image/", (req, res, next) => {
 	const path = imagePath + "/" + req.body.url.replace(new RegExp(`^${encodeURIComponent(imageUrl)}`), "")
+	console.log(`[${req.method}: ${req.path}]`, path)
 	fs.unlink(path)
 		.then(content => {
 			res.json({url: req.body.url})
