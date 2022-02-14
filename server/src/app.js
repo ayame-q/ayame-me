@@ -27,54 +27,61 @@ app.get("/health_check", (req, res) => {
 	res.status(200).send()
 })
 
-app.post("/works/:slug", (req, res, next) => {
-	const path = `${contentPath}/works/${req.params.slug}.json`
-	console.log(`[${req.method}: ${req.path}]`, path)
-	fs.writeFile(path, JSON.stringify(req.body), "utf8")
-		.then(() => {
-			return fs.readFile(path, "utf8")
-		})
-		.then(content => {
-			res.json(JSON.parse(content))
-		})
-		.catch(err => {
-			next(err)
-		})
-})
+const isFileExists = async (path) => {
+	try {
+		return !!(await fs.lstat(path))
+	} catch (error) {
+		return false
+	}
+}
 
-app.put("/works/:slug", (req, res, next) => {
-	const path = `${contentPath}/works/${req.params.slug}.json`
-	console.log(`[${req.method}: ${req.path}]`, path)
-	fs.writeFile(path, JSON.stringify(req.body), "utf8")
-		.then(() => {
-			return fs.readFile(path, "utf8")
-		})
-		.then(content => {
-			res.json(JSON.parse(content))
-		})
-		.catch(err => {
-			next(err)
-		})
-})
+const save = async (path, content, method) => {
+	if (method === "POST") {
+		if (await isFileExists(path)) {
+			throw new Error(`${path} is already exists.`)
+		}
+	}
+	if (method === "PUT") {
+		const fileData = JSON.parse(await fs.readFile(path, "utf8"))
+		if (!content.uuid) {
+			content.uuid = fileData.uuid
+		}
+	}
+	if (method === "PATCH") {
+		const fileData = JSON.parse(await fs.readFile(path, "utf8"))
+		content = Object.assign(fileData, content)
+	}
+	if (!content.uuid) {
+		content.uuid = uuid()
+	}
+	await fs.writeFile(path, JSON.stringify(content), "utf8")
+	const fileData = await fs.readFile(path, "utf8")
+	return JSON.parse(fileData)
+}
 
-app.patch("/works/:slug", (req, res, next) => {
+const onContentRequest = (req, res, next) => {
 	const path = `${contentPath}/works/${req.params.slug}.json`
 	console.log(`[${req.method}: ${req.path}]`, path)
-	fs.readFile(path, "utf8")
+	save(path, req.body, req.method)
 		.then(content => {
-			const data = Object.assign(JSON.parse(content), req.body)
-			return fs.writeFile(path, JSON.stringify(data), "utf8")
-		})
-		.then(() => {
-			return fs.readFile(path, "utf8")
-		})
-		.then(content => {
-			res.json(JSON.parse(content))
+			res.json(content)
 		})
 		.catch(err => {
 			next(err)
 		})
-})
+}
+
+app.post("/works/:slug", onContentRequest)
+
+app.put("/works/:slug", onContentRequest)
+
+app.patch("/works/:slug", onContentRequest)
+
+app.post("/skills/:slug", onContentRequest)
+
+app.put("/skills/:slug", onContentRequest)
+
+app.patch("/skills/:slug", onContentRequest)
 
 app.post("/image/", upload.single("file"), (req, res) => {
 	const path = req.file.path
