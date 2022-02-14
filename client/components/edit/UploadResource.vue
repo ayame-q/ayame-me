@@ -48,10 +48,10 @@ export default {
 		async uploadImage (file) {
 			const formData = new FormData()
 			formData.append("file", file)
-			const response = await this.$axios.post("http://localhost/api/image/", formData)
+			const response = await this.$http.$post("/api/image/", formData)
 			this.resources.push({
 				type: "image",
-				url: response.data.url,
+				url: response.url,
 			})
 			this.$emit("input", this.resources)
 		},
