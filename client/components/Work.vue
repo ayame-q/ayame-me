@@ -35,23 +35,13 @@
 					</VueDraggable>
 					<UploadResource v-if="isEditable" v-model="work.resources" />
 				</div>
-				<div v-click-outside="onClickOutsideText" class="text-wrap" v-on:click="onClickText">
-					<div v-if="!isEditable || (isEditable && !isEditing)" class="text" v-html="text" />
-					<vue-easymde
-						v-if="isEditable && isEditing"
-						v-model="work.text"
-						v-bind:configs="easyMDEConfigs"
-						class="editor"
-						v-on:initialized="easyMDEInitialized"
-					/>
-				</div>
+				<Description v-model="work.text" v-bind:is-editable="isEditable" />
 			</div>
 		</article>
 	</main>
 </template>
 
 <script>
-import marked from "marked"
 import VueDraggable from "vuedraggable"
 import ContentEditable from "~/components/edit/ContentEditable"
 import UploadResource from "~/components/edit/UploadResource"
@@ -74,35 +64,18 @@ export default {
 				}
 			},
 		},
-		isEditable: {
-			type: Boolean,
-			default () {
-				return false
-			},
-		},
 	},
 	data () {
 		return {
-			isEditing: false,
-			easyMDE: null,
 			work: {},
-			easyMDEConfigs: {
-				spellChecker: false,
-				status: false,
-				placeholder: "説明文",
-				toolbar: false,
-			},
 		}
 	},
 	computed: {
 		title () {
 			return this.value.title.replace("<br>", "")
 		},
-		text () {
-			marked.setOptions({
-				breaks: true,
-			})
-			return marked(this.value.text)
+		isEditable () {
+			return this.$store.getters["status/getIsEditable"]
 		},
 	},
 	watch: {
@@ -115,27 +88,11 @@ export default {
 	},
 	created () {
 		this.work = { ...this.value }
-		if (!this.work.text) {
-			this.isEditing = true
-		}
 	},
 	mounted () {
 		this.loadWebFont()
 	},
 	methods: {
-		onClickText () {
-			if (this.isEditable) {
-				this.isEditing = true
-			}
-		},
-		onClickOutsideText () {
-			if (this.isEditing === true && this.work.text) {
-				this.isEditing = false
-			}
-		},
-		easyMDEInitialized (easyMDE) {
-			this.easyMDE = easyMDE
-		},
 		loadWebFont () {
 			/* global Ts */
 			Ts.loadFont()
@@ -209,38 +166,6 @@ h2 {
 				.text-wrap {
 					width: 55%;
 					height: fit-content;
-
-					&::v-deep p {
-						margin: 1rem 0;
-					}
-
-					.editor {
-						&::v-deep {
-							.CodeMirror {
-								color: $text-color;
-								background-color: transparent;
-								border: none;
-								padding: 0;
-
-								.CodeMirror-placeholder {
-									opacity: 0.3;
-								}
-
-								.CodeMirror-lines {
-									margin: 1rem 0;
-									padding: 0;
-								}
-
-								.CodeMirror-line {
-									padding: 0;
-								}
-							}
-
-							.editor-preview {
-								display: none;
-							}
-						}
-					}
 				}
 			}
 		}

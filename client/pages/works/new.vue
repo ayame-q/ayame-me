@@ -1,6 +1,6 @@
 <template>
 	<div id="works-detail">
-		<Work v-model="work" v-bind:is-editable="true" />
+		<Work v-model="work" />
 		<div v-if="isEditable === null" class="loading">
 			<vue-loading type="spiningDubbles" v-bind:size="{ width: '30vw', height: '30vw' }" color="#ad5a88" />
 		</div>
@@ -10,6 +10,7 @@
 <script>
 export default {
 	name: "New",
+	scrollToTop: false,
 	data () {
 		return {
 			work: {
