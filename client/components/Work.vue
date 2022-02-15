@@ -22,22 +22,18 @@
 				</ul>
 			</div>
 			<div class="content-wrap">
-				<div class="resources">
-					<div v-for="(resource, index) of value.resources" v-bind:key="index">
-						<p v-if="resource.type === 'image'">
-							<img v-bind:src="resource.url" alt="">
-						</p>
-						<div v-if="resource.type === 'youtube'" class="youtube">
-							<iframe
-								v-bind:src="`https://www.youtube.com/embed/${resource.videoId}`"
-								title="YouTube video player"
-								frameborder="0"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-								allowfullscreen
-							/>
+				<div class="resources-wrap">
+					<div v-if="!isEditable">
+						<div v-for="(resource, index) of work.resources" v-bind:key="index">
+							<WorkResource v-bind:resource="resource" />
 						</div>
 					</div>
-					<UploadResource v-model="work.resources" />
+					<VueDraggable v-if="isEditable" v-model="work.resources">
+						<div v-for="(resource, index) of work.resources" v-bind:key="index">
+							<WorkResource v-bind:resource="resource" />
+						</div>
+					</VueDraggable>
+					<UploadResource v-if="isEditable" v-model="work.resources" />
 				</div>
 				<div v-click-outside="onClickOutsideText" class="text-wrap" v-on:click="onClickText">
 					<div v-if="!isEditable || (isEditable && !isEditing)" class="text" v-html="text" />
@@ -56,11 +52,12 @@
 
 <script>
 import marked from "marked"
+import VueDraggable from "vuedraggable"
 import ContentEditable from "~/components/edit/ContentEditable"
 import UploadResource from "~/components/edit/UploadResource"
 export default {
 	name: "Work",
-	components: { UploadResource, ContentEditable },
+	components: { UploadResource, ContentEditable, VueDraggable },
 	props: {
 		value: {
 			type: Object,
@@ -205,36 +202,13 @@ h2 {
 				display: flex;
 				justify-content: space-between;
 
-				.resources {
+				.resources-wrap {
 					width: 40%;
-
-					> div,
-					> p {
-						margin: 1rem 0;
-					}
-
-					img {
-						width: 100%;
-					}
-
-					.youtube {
-						position: relative;
-						width: 100%;
-						height: 0;
-						padding-top: 56.25%;
-
-						iframe {
-							position: absolute;
-							width: 100%;
-							height: 100%;
-							top: 0;
-							left: 0;
-						}
-					}
 				}
 
 				.text-wrap {
 					width: 55%;
+					height: fit-content;
 
 					&::v-deep p {
 						margin: 1rem 0;

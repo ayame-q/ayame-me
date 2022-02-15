@@ -3,8 +3,21 @@
 		<div
 			class="drop-area"
 			v-on:dragover.prevent
-			v-on:drop.prevent="dropFiles"
-		/>
+			v-on:drop.prevent="onDropFiles"
+		>
+			<p class="upload-icon">
+				<img src="@/assets/img/upload.svg" alt="">
+			</p>
+			<div class="buttons">
+				<p>
+					<button v-on:click="onClickFileSelectButton">
+						ファイルを選択
+					</button>
+					<button>Youtube動画を埋め込む</button>
+				</p>
+			</div>
+		</div>
+		<input ref="fileInput" type="file" class="file-input" accept="application/pdf,image/png,image/jpeg,image/svg+xml" v-on:change.prevent="onSelectFiles">
 		<canvas ref="canvas" class="pdf-render" />
 	</div>
 </template>
@@ -27,23 +40,34 @@ export default {
 		this.resources = this.value
 	},
 	methods: {
-		dropFiles (event) {
+		onClickFileSelectButton () {
+			this.$refs.fileInput.click()
+		},
+		onSelectFiles (event) {
+			Array.prototype.forEach.call(event.target.files, (file) => {
+				this.onGetFile(file)
+			})
+		},
+		onDropFiles (event) {
 			const files = [...event.dataTransfer.files]
 			files.forEach((file) => {
-				switch (file.type) {
-				case "application/pdf":
-					this.uploadPdf(file)
-					break
-				case "image/png":
-				case "image/jpeg":
-				case "image/svg+xml":
-					this.uploadImage(file)
-					break
-				default:
-					// eslint-disable-next-line no-console
-					console.error("Unknown file type.", file.type)
-				}
+				this.onGetFile(file)
 			})
+		},
+		onGetFile (file) {
+			switch (file.type) {
+			case "application/pdf":
+				this.uploadPdf(file)
+				break
+			case "image/png":
+			case "image/jpeg":
+			case "image/svg+xml":
+				this.uploadImage(file)
+				break
+			default:
+				// eslint-disable-next-line no-console
+				console.error("Unknown file type.", file.type)
+			}
 		},
 		async uploadImage (file) {
 			const formData = new FormData()
@@ -129,13 +153,53 @@ export default {
 	.drop-area {
 		width: 100%;
 		height: 100%;
-		background-color: $main-color;
+		//background-color: $main-color;
+		border: $main-color dashed 5px;
 		position: absolute;
 		top: 0;
 		left: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		p.upload-icon {
+			width: 20%;
+			margin: 5%;
+
+			img {
+				width: 100%;
+			}
+		}
+
+		.buttons {
+			width: 100%;
+
+			p {
+				display: flex;
+				width: 100%;
+				padding: 0 5%;
+				justify-content: space-around;
+
+				button {
+					color: $main-color;
+					border: $main-color solid 3px;
+					background-color: transparent;
+					padding: 3% 0;
+					width: 38%;
+					cursor: pointer;
+
+					&:hover {
+						color: #fff;
+						background-color: $main-color;
+					}
+				}
+			}
+		}
 	}
 
-	.pdf-render {
+	.pdf-render,
+	.file-input {
 		position: absolute;
 		visibility: hidden;
 		z-index: -99;
