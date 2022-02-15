@@ -43,6 +43,7 @@ export default {
 		{ src: "@/plugins/v-click-outside.client.js", mode: "client" },
 		{ src: "@/plugins/vue-easymde.client.js", mode: "client" },
 		{ src: "@/plugins/vue-loading.client.js", mode: "client" },
+		{ src: "@/plugins/vue-js-modal.js" },
 		{ src: "@/plugins/initialize.client.js", mode: "client" },
 	],
 
