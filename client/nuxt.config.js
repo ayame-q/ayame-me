@@ -42,6 +42,8 @@ export default {
 		{ src: "@/plugins/v-scroll-lock.client.js", mode: "client" },
 		{ src: "@/plugins/v-click-outside.client.js", mode: "client" },
 		{ src: "@/plugins/vue-easymde.client.js", mode: "client" },
+		{ src: "@/plugins/vue-loading.client.js", mode: "client" },
+		{ src: "@/plugins/initialize.client.js", mode: "client" },
 	],
 
 	// Auto import components: https://go.nuxtjs.dev/config-components
@@ -84,7 +86,14 @@ export default {
 
 	// http module configuration: https://http.nuxtjs.org/options
 	http: {
-		baseURL: "/"
+		baseURL: "/",
+	},
+
+	// Middlewares: https://nuxtjs.org/ja/docs/directory-structure/middleware/
+	router: {
+		middleware: [
+			"checkIsEditable",
+		],
 	},
 
 	// Google gtag configuration: https://github.com/nuxt-community/google-gtag-module

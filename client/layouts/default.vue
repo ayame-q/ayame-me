@@ -79,7 +79,6 @@ export default {
 		position: fixed;
 		bottom: 0;
 		background-color: $main-color;
-		z-index: 9999;
 	}
 
 	&::before {

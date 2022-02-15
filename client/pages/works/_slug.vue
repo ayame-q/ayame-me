@@ -1,6 +1,6 @@
 <template>
 	<div id="works-detail">
-		<Work v-model="work" />
+		<Work v-model="work" v-bind:is-editable="$store.getters['status/getIsEditable']" />
 	</div>
 </template>
 
