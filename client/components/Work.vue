@@ -39,7 +39,16 @@
 					</div>
 					<UploadResource v-model="work.resources" />
 				</div>
-				<div class="text" v-html="text" />
+				<div v-click-outside="onClickOutsideText" class="text-wrap" v-on:click="onClickText">
+					<div v-if="!isEditable || (isEditable && !isEditing)" class="text" v-html="text" />
+					<vue-easymde
+						v-if="isEditable && isEditing"
+						v-model="work.text"
+						v-bind:configs="easyMDEConfigs"
+						class="editor"
+						v-on:initialized="easyMDEInitialized"
+					/>
+				</div>
 			</div>
 		</article>
 	</main>
@@ -77,7 +86,15 @@ export default {
 	},
 	data () {
 		return {
+			isEditing: false,
+			easyMDE: null,
 			work: {},
+			easyMDEConfigs: {
+				spellChecker: false,
+				status: false,
+				placeholder: "説明文",
+				toolbar: false,
+			},
 		}
 	},
 	computed: {
@@ -101,11 +118,27 @@ export default {
 	},
 	created () {
 		this.work = { ...this.value }
+		if (!this.work.text) {
+			this.isEditing = true
+		}
 	},
 	mounted () {
 		this.loadWebFont()
 	},
 	methods: {
+		onClickText () {
+			if (this.isEditable) {
+				this.isEditing = true
+			}
+		},
+		onClickOutsideText () {
+			if (this.isEditing === true && this.work.text) {
+				this.isEditing = false
+			}
+		},
+		easyMDEInitialized (easyMDE) {
+			this.easyMDE = easyMDE
+		},
 		loadWebFont () {
 			/* global Ts */
 			Ts.loadFont()
@@ -200,11 +233,39 @@ h2 {
 					}
 				}
 
-				.text {
+				.text-wrap {
 					width: 55%;
 
 					&::v-deep p {
 						margin: 1rem 0;
+					}
+
+					.editor {
+						&::v-deep {
+							.CodeMirror {
+								color: $text-color;
+								background-color: transparent;
+								border: none;
+								padding: 0;
+
+								.CodeMirror-placeholder {
+									opacity: 0.3;
+								}
+
+								.CodeMirror-lines {
+									margin: 1rem 0;
+									padding: 0;
+								}
+
+								.CodeMirror-line {
+									padding: 0;
+								}
+							}
+
+							.editor-preview {
+								display: none;
+							}
+						}
 					}
 				}
 			}

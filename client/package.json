@@ -30,9 +30,11 @@
 		"sass-loader": "^10.1.1",
 		"stylelint-config-recommended-scss": "^4.3.0",
 		"stylelint-scss": "^3.20.1",
+		"v-click-outside": "^3.1.2",
 		"v-scroll-lock": "^1.3.1",
 		"vue-easymde": "^2.0.0",
 		"vue-js-modal": "^2.0.0-rc.6",
+		"vue-loading-template": "^1.3.2",
 		"vue-scrollto": "^2.20.0"
 	},
 	"devDependencies": {
