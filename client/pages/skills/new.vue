@@ -16,6 +16,7 @@ export default {
 			skill: {
 				slug: "",
 				title: "",
+				level: 0,
 				experiencePeriod: "",
 				icon: "",
 				text: "",

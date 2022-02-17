@@ -13,6 +13,12 @@
 						<h2>
 							<ContentEditable v-model="skill.title" v-bind:contenteditable="isEditable" tag="span" placeholder="タイトル" />
 						</h2>
+						<p class="star-wrap">
+							<span v-for="n of 3" v-bind:key="n" class="star" v-bind:class="{editable: isEditable}" v-on:click="setLevel(n)">
+								<img v-if="n <= skill.level" src="@/assets/img/star-full.svg" alt="★">
+								<img v-else src="@/assets/img/star-blank.svg" alt="☆">
+							</span>
+						</p>
 					</div>
 					<p class="experience-period">
 						経験: <ContentEditable v-model="skill.experiencePeriod" v-bind:contenteditable="isEditable" tag="span" v-bind:no-n-l="true" placeholder="nヶ月 (yyyy/mm 〜 yyyy/mm)" />
@@ -39,6 +45,7 @@ export default {
 				return {
 					slug: "",
 					title: "",
+					level: 0,
 					experiencePeriod: "",
 					icon: "",
 					text: "",
@@ -71,6 +78,11 @@ export default {
 		this.loadWebFont()
 	},
 	methods: {
+		setLevel (level) {
+			if (this.isEditable) {
+				this.skill.level = level
+			}
+		},
 		onClickIcon () {
 			if (this.isEditable && this.skill.icon) {
 				this.skill.icon = ""
@@ -149,6 +161,25 @@ main {
 					.upload {
 						width: 100%;
 						height: 100%;
+					}
+				}
+
+				.star-wrap {
+					display: flex;
+					margin-left: 0.8rem;
+
+					.star {
+						width: 1rem;
+						margin: 0 0.5rem;
+
+						&.editable {
+							cursor: pointer;
+						}
+
+						img {
+							display: block;
+							width: 100%;
+						}
 					}
 				}
 			}
