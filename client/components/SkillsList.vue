@@ -46,6 +46,11 @@
 			</li>
 		</ul>
 		<div class="coaster-rail" />
+		<p class="more">
+			<nuxt-link to="/skills/">
+				<img src="@/assets/img/more.svg" alt="more...">
+			</nuxt-link>
+		</p>
 	</section>
 </template>
 
@@ -94,6 +99,17 @@ export default {
 			img {
 				width: 100%;
 			}
+		}
+	}
+
+	.more {
+		position: absolute;
+		width: 15vw;
+		top: calc(2.5vw + 39vw);
+		left: 76.8vw;
+
+		img {
+			width: 100%;
 		}
 	}
 }
