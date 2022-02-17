@@ -3,9 +3,9 @@
 		<Home />
 		<div v-scroll-lock="isModal" v-bind:class="{ modal: isModal, hidden: isIndex }">
 			<Nuxt />
-			<p class="close" v-on:click="closeModal">
-				×
-			</p>
+			<button class="close" v-on:click="closeModal">
+				<img src="@/assets/img/close.svg" alt="閉じる">
+			</button>
 		</div>
 		<div
 			class="overlay"
@@ -24,7 +24,7 @@ export default {
 	name: "Default",
 	computed: {
 		isModal () {
-			return this.$route.path.startsWith("/works/")
+			return this.$route.path.startsWith("/works/") || this.$route.path.startsWith("/skills/")
 		},
 		isIndex () {
 			return this.$route.name === "index"
@@ -52,7 +52,7 @@ export default {
 }
 
 .modal {
-	z-index: 1000;
+	z-index: 998;
 	visibility: visible;
 	opacity: 1;
 	transition: opacity 0.5s;
@@ -65,11 +65,6 @@ export default {
 	margin-bottom: 8vh;
 	background-color: $board-color;
 	padding: 2.5vw calc(2.5vw + 4vw);
-
-	> * {
-		position: relative;
-		z-index: 1002;
-	}
 
 	&::before,
 	&::after {
@@ -90,14 +85,20 @@ export default {
 	}
 
 	.close {
-		z-index: 1003;
+		z-index: 998;
 		display: block;
 		position: fixed;
-		top: 2vh;
+		background: none;
+		border: none;
+		width: 1.6rem;
+		height: 1.6rem;
+		top: 4vh;
 		right: 9vw;
-		font-size: 2rem;
-		color: $main-color;
 		cursor: pointer;
+
+		img {
+			width: 100%;
+		}
 	}
 }
 
@@ -114,7 +115,7 @@ export default {
 
 	&.active {
 		opacity: 1;
-		z-index: 998;
+		z-index: 995;
 		cursor: pointer;
 	}
 }
@@ -137,7 +138,7 @@ export default {
 	&.active {
 		visibility: visible;
 		opacity: 1;
-		z-index: 999;
+		z-index: 996;
 	}
 }
 </style>

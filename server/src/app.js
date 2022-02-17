@@ -2,6 +2,7 @@ const express = require("express")
 const fs = require("fs").promises
 const multer = require('multer')
 const uuid = require("uuid").v4
+const path = require("path")
 
 const app = express()
 const contentPath = process.env.CONTENT_PATH
@@ -20,6 +21,37 @@ const upload = multer({
 })
 const port = process.env.PORT
 
+let worksMaxOrder = 0;
+let skillsMaxOrder = 0;
+
+const initialize = async () => {
+	const workFileNames = await fs.readdir(`${contentPath}/works/`)
+	for (const fileName of workFileNames) {
+		if (fileName.match(/\.json$/)) {
+			const filePath = path.join(contentPath, "/works/", fileName)
+			const fileData = JSON.parse(await fs.readFile(filePath, "utf8"))
+			if (fileData.order > worksMaxOrder) {
+				worksMaxOrder = fileData.order
+			}
+		}
+	}
+	console.log("WorksMaxOrder:", worksMaxOrder)
+	const skillFileNames = await fs.readdir(`${contentPath}/skills/`)
+	for (const fileName of skillFileNames) {
+		if (fileName.match(/\.json$/)) {
+			const filePath = path.join(contentPath, "/skills/", fileName)
+			const fileData = JSON.parse(await fs.readFile(filePath, "utf8"))
+			if (fileData.order > skillsMaxOrder) {
+				skillsMaxOrder = fileData.order
+			}
+		}
+	}
+	console.log("SkillsMaxOrder:", skillsMaxOrder)
+	app.listen(port, () => {
+		console.log(`Server is running on port ${port}`)
+	})
+}
+
 app.use(express.json())
 
 app.get("/health_check", (req, res) => {
@@ -27,65 +59,99 @@ app.get("/health_check", (req, res) => {
 	res.status(200).send()
 })
 
-const isFileExists = async (path) => {
+const isFileExists = async (filePath) => {
 	try {
-		return !!(await fs.lstat(path))
+		return !!(await fs.lstat(filePath))
 	} catch (error) {
 		return false
 	}
 }
 
-const save = async (path, content, method) => {
+const getImageFilePathFromUrl = (inputPath) => {
+	return imagePath + "/" + inputPath.replace(new RegExp(`^${imageUrl}`), "").replace(new RegExp(`^${encodeURIComponent(imageUrl)}`), "")
+}
+
+const save = async (filePath, content, method) => {
 	if (method === "POST") {
-		if (await isFileExists(path)) {
-			throw new Error(`${path} is already exists.`)
+		if (await isFileExists(filePath)) {
+			throw new Error(`${filePath} is already exists.`)
 		}
 	}
 	if (method === "PUT") {
-		const fileData = JSON.parse(await fs.readFile(path, "utf8"))
+		const fileData = JSON.parse(await fs.readFile(filePath, "utf8"))
 		if (!content.uuid) {
 			content.uuid = fileData.uuid
 		}
 	}
 	if (method === "PATCH") {
-		const fileData = JSON.parse(await fs.readFile(path, "utf8"))
+		const fileData = JSON.parse(await fs.readFile(filePath, "utf8"))
 		content = Object.assign(fileData, content)
 	}
 	if (!content.uuid) {
 		content.uuid = uuid()
 	}
-	await fs.writeFile(path, JSON.stringify(content), "utf8")
-	const fileData = await fs.readFile(path, "utf8")
+	await fs.writeFile(filePath, JSON.stringify(content), "utf8")
+	const fileData = await fs.readFile(filePath, "utf8")
 	return JSON.parse(fileData)
 }
 
-const onContentRequest = (req, res, next) => {
-	const path = `${contentPath}/works/${req.params.slug}.json`
-	console.log(`[${req.method}: ${req.path}]`, path)
-	save(path, req.body, req.method)
+const onContentWorksRequest = (req, res, next) => {
+	const filePath = `${contentPath}/works/${req.params.slug}.json`
+	console.log(`[${req.method}: ${req.path}]`, filePath)
+	const content = req.body
+	let orderAdded = false
+	if (!content.order) {
+		content.order = worksMaxOrder + 1
+		orderAdded = true
+	}
+	save(filePath, content, req.method)
 		.then(content => {
 			res.json(content)
+			if (orderAdded) {
+				worksMaxOrder++
+			}
 		})
 		.catch(err => {
 			next(err)
 		})
 }
 
-app.post("/works/:slug", onContentRequest)
+const onContentSkillsRequest = (req, res, next) => {
+	const filePath = `${contentPath}/skills/${req.params.slug}.json`
+	console.log(`[${req.method}: ${req.path}]`, filePath)
+	const content = req.body
+	let orderAdded = false
+	if (!content.order) {
+		content.order = skillsMaxOrder + 1
+		orderAdded = true
+	}
+	save(filePath, content, req.method)
+		.then(content => {
+			res.json(content)
+			if (orderAdded) {
+				skillsMaxOrder++
+			}
+		})
+		.catch(err => {
+			next(err)
+		})
+}
 
-app.put("/works/:slug", onContentRequest)
+app.post("/works/:slug", onContentWorksRequest)
 
-app.patch("/works/:slug", onContentRequest)
+app.put("/works/:slug", onContentWorksRequest)
 
-app.post("/skills/:slug", onContentRequest)
+app.patch("/works/:slug", onContentWorksRequest)
 
-app.put("/skills/:slug", onContentRequest)
+app.post("/skills/:slug", onContentSkillsRequest)
 
-app.patch("/skills/:slug", onContentRequest)
+app.put("/skills/:slug", onContentSkillsRequest)
+
+app.patch("/skills/:slug", onContentSkillsRequest)
 
 app.post("/image/", upload.single("file"), (req, res) => {
-	const path = req.file.path
-	console.log(`[${req.method}: ${req.path}]`, path)
+	const filePath = req.file.path
+	console.log(`[${req.method}: ${req.path}]`, filePath)
 	res.json({
 		"type": "image",
 		"url": imageUrl + req.file.filename
@@ -93,9 +159,9 @@ app.post("/image/", upload.single("file"), (req, res) => {
 })
 
 app.delete("/image/", (req, res, next) => {
-	const path = imagePath + "/" + req.body.url.replace(new RegExp(`^${encodeURIComponent(imageUrl)}`), "")
-	console.log(`[${req.method}: ${req.path}]`, path)
-	fs.unlink(path)
+	const filePath = getImageFilePathFromUrl(req.body.url)
+	console.log(`[${req.method}: ${req.path}]`, filePath)
+	fs.unlink(filePath)
 		.then(content => {
 			res.json({url: req.body.url})
 		})
@@ -104,13 +170,39 @@ app.delete("/image/", (req, res, next) => {
 		})
 })
 
-app.listen(port, () => {
-	console.log(`Server is running on port ${port}`)
+process.on("SIGTERM", async () => {
+	const images = []
+
+	console.log("Process is terminating...")
+	const workFileNames = await fs.readdir(`${contentPath}/works/`)
+	for (const fileName of workFileNames) {
+		if (fileName.match(/\.json$/)) {
+			const filePath = path.join(contentPath, "/works/", fileName)
+			const fileData = JSON.parse(await fs.readFile(filePath, "utf8"))
+			for (const url of fileData.resources.url) {
+				images.push(getImageFilePathFromUrl(url))
+			}
+		}
+	}
+	const skillFileNames = await fs.readdir(`${contentPath}/skills/`)
+	for (const fileName of skillFileNames) {
+		if (fileName.match(/\.json$/)) {
+			const filePath = path.join(contentPath, "/skills/", fileName)
+			const fileData = JSON.parse(await fs.readFile(filePath, "utf8"))
+			images.push(getImageFilePathFromUrl(fileData.icon))
+		}
+	}
+
+	const imageFileNames = await fs.readdir(`${imagePath}/`)
+	for (const imageFileName of imageFileNames) {
+		const filePath = `${imagePath}/${imageFileName}`
+		if (!images.includes(filePath)) {
+			await fs.unlink(filePath)
+			console.log("Deleted:", filePath)
+		}
+	}
+	console.log("Clean up is finished. Bye.")
+	process.exit(0)
 })
 
-process.on("SIGTERM", async () => {
-	/*
-	TODO
-	終了時不要な画像ファイルを削除する処理を追加
-	*/
-})
+initialize()

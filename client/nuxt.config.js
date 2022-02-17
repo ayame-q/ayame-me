@@ -77,6 +77,8 @@ export default {
 
 	// Modules: https://go.nuxtjs.dev/config-modules
 	modules: [
+		// https://content.nuxtjs.org/ja/
+		'@nuxt/content',
 		// https://http.nuxtjs.org/
 		'@nuxt/http',
 		// https://github.com/rigor789/vue-scrollto
@@ -84,6 +86,10 @@ export default {
 		// https://github.com/nuxt-community/google-gtag-module
 		'@nuxtjs/google-gtag',
 	],
+
+	content: {
+		fullTextSearchFields: ["uuid", "slug", "title", "description"],
+	},
 
 	// http module configuration: https://http.nuxtjs.org/options
 	http: {

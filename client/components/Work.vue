@@ -7,7 +7,7 @@
 						<h2>
 							<ContentEditable v-model="work.title" v-bind:contenteditable="isEditable" tag="span" placeholder="タイトル" />
 						</h2>
-						<p v-if="value.subTitle" class="subtitle">
+						<p v-if="value.subTitle || isEditable" class="subtitle">
 							<ContentEditable v-model="work.subTitle" v-bind:contenteditable="isEditable" tag="span" placeholder="サブタイトル" />
 						</p>
 					</div>
@@ -15,11 +15,30 @@
 						制作期間: <ContentEditable v-model="work.createPeriod" v-bind:contenteditable="isEditable" tag="span" v-bind:no-n-l="true" placeholder="nヶ月 (yyyy/mm 〜 yyyy/mm)" />
 					</p>
 				</div>
-				<ul class="skills">
-					<li v-for="(skill, index) of value.skills" v-bind:key="index">
-						<img v-bind:src="skill.img" v-bind:alt="skill.name" v-bind:title="skill.name">
-					</li>
-				</ul>
+				<div v-if="!isEditable" class="skills">
+					<WorkSkill v-for="skill of work.skills" v-bind:key="skill" class="skill" v-bind:value="skill" />
+				</div>
+				<VueDraggable
+					v-if="isEditable"
+					v-model="work.skills"
+					class="skills"
+					v-bind:class="{dragging: isSkillsDragging}"
+					v-on:clone="isSkillsDragging = true"
+					v-on:end="isSkillsDragging = false"
+				>
+					<WorkSkill
+						v-for="(skill, index) of work.skills"
+						v-bind:key="skill"
+						class="skill editable"
+						v-bind:value="skill"
+						v-bind:class="{dragging: isSkillsDragging}"
+						v-on:click="deleteSkill(index)"
+					/>
+				</VueDraggable>
+				<div v-if="isEditable" class="add-skill" v-on:click="isAddSkillModalOpen = true">
+					＋
+				</div>
+				<AddSkillModal v-if="isAddSkillModalOpen" v-model="work.skills" v-on:close="isAddSkillModalOpen = false" />
 			</div>
 			<div class="content-wrap">
 				<div class="resources-wrap">
@@ -35,8 +54,9 @@
 					</VueDraggable>
 					<UploadResource v-if="isEditable" v-model="work.resources" />
 				</div>
-				<Description v-model="work.text" v-bind:is-editable="isEditable" />
+				<Description v-model="work.description" class="description-wrap" v-bind:is-editable="isEditable" />
 			</div>
+			<SubmitButton v-model="work" api-type="works" root-path="/works/" v-bind:has-thumbnail="true" />
 		</article>
 	</main>
 </template>
@@ -45,9 +65,11 @@
 import VueDraggable from "vuedraggable"
 import ContentEditable from "~/components/edit/ContentEditable"
 import UploadResource from "~/components/edit/UploadResource"
+import SubmitButton from "~/components/edit/SubmitButton"
+import AddSkillModal from "~/components/edit/AddSkillModal"
 export default {
 	name: "Work",
-	components: { UploadResource, ContentEditable, VueDraggable },
+	components: { AddSkillModal, SubmitButton, UploadResource, ContentEditable, VueDraggable },
 	props: {
 		value: {
 			type: Object,
@@ -67,13 +89,12 @@ export default {
 	},
 	data () {
 		return {
+			isAddSkillModalOpen: false,
 			work: {},
+			isSkillsDragging: false,
 		}
 	},
 	computed: {
-		title () {
-			return this.value.title.replace("<br>", "")
-		},
 		isEditable () {
 			return this.$store.getters["status/getIsEditable"]
 		},
@@ -93,6 +114,9 @@ export default {
 		this.loadWebFont()
 	},
 	methods: {
+		deleteSkill (index) {
+			this.work.skills.splice(index, 1)
+		},
 		loadWebFont () {
 			/* global Ts */
 			Ts.loadFont()
@@ -108,65 +132,95 @@ h2 {
 	font-family: "A1ゴシック M", A1 Gothic M, sans-serif;
 }
 
-#works-detail {
-	main {
-		article {
-			height: 100%;
+main {
+	article {
+		height: 100%;
 
-			.meta {
+		.meta {
+			display: flex;
+			align-items: center;
+			position: relative;
+
+			.title-wrap {
 				display: flex;
-				align-items: center;
+				align-items: baseline;
+				flex-shrink: 0;
 
-				.title-wrap {
-					display: flex;
-					align-items: baseline;
-					flex-shrink: 0;
+				p.subtitle {
+					margin: 0;
+					margin-left: 0.5em;
 
-					p.subtitle {
-						margin: 0;
-						margin-left: 0.5em;
+					span {
+						margin: 0 0.2em;
+					}
 
-						span {
-							margin: 0 0.2em;
-						}
-
-						&::before,
-						&::after {
-							content: "〜";
-						}
+					&::before,
+					&::after {
+						content: "〜";
 					}
 				}
+			}
 
-				ul.skills {
-					list-style: none;
-					padding: 0;
-					display: flex;
-					justify-content: flex-end;
-					flex-shrink: 1;
-					flex-grow: 1;
+			.skills {
+				display: flex;
+				justify-content: flex-end;
+				flex-shrink: 1;
+				flex-grow: 1;
 
-					li {
-						margin: 0.5em;
+				.skill {
+					margin: 0.5em;
+					width: 1.6em;
+					height: 1.6em;
+					position: relative;
 
-						img {
-							height: 1.6em;
+					&.editable {
+						&:hover {
+							&.dragging {
+								&::before {
+									content: none;
+								}
+							}
+
+							&::before {
+								content: "削除";
+								cursor: pointer;
+								position: absolute;
+								left: 50%;
+								top: 50%;
+								transform: translateX(-50%) translateY(-50%);
+								font-size: 0.5rem;
+								width: fit-content;
+								background-color: rgba($text-color, 0.7);
+								padding: 10%;
+								color: #fff;
+							}
 						}
 					}
 				}
 			}
 
-			.content-wrap {
-				display: flex;
-				justify-content: space-between;
+			.add-skill {
+				color: $main-color;
+				cursor: pointer;
+				width: fit-content;
+				position: absolute;
+				left: 100%;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+		}
 
-				.resources-wrap {
-					width: 40%;
-				}
+		.content-wrap {
+			display: flex;
+			justify-content: space-between;
 
-				.text-wrap {
-					width: 55%;
-					height: fit-content;
-				}
+			.resources-wrap {
+				width: 40%;
+			}
+
+			.description-wrap {
+				width: 55%;
+				height: fit-content;
 			}
 		}
 	}

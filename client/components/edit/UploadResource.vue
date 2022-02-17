@@ -1,30 +1,18 @@
 <template>
-	<div class="drop-wrap">
-		<div
-			class="drop-area"
-			v-on:dragover.prevent
-			v-on:drop.prevent="onDropFiles"
-		>
-			<p class="upload-icon">
-				<img src="@/assets/img/upload.svg" alt="">
-			</p>
-			<div class="buttons">
-				<p>
-					<button v-on:click="onClickFileSelectButton">
-						ファイルを選択
-					</button>
-					<button>Youtube動画を埋め込む</button>
-				</p>
-			</div>
-		</div>
-		<input ref="fileInput" type="file" class="file-input" accept="application/pdf,image/png,image/jpeg,image/svg+xml" v-on:change.prevent="onSelectFiles">
-		<canvas ref="canvas" class="pdf-render" />
-	</div>
+	<Upload ref="upload" class="upload-box" v-on:uploaded="onUploaded">
+		<p class="buttons">
+			<button v-on:click="onClickFileSelectButton">
+				ファイルを選択
+			</button>
+			<button>Youtube動画を埋め込む</button>
+		</p>
+	</Upload>
 </template>
 
 <script>
-import PDFJS from "pdfjs-dist"
+import Upload from "~/components/edit/Upload"
 export default {
+	components: { Upload },
 	props: {
 		value: {
 			type: Array,
@@ -40,169 +28,44 @@ export default {
 		this.resources = this.value
 	},
 	methods: {
-		onClickFileSelectButton () {
-			this.$refs.fileInput.click()
-		},
-		onSelectFiles (event) {
-			Array.prototype.forEach.call(event.target.files, (file) => {
-				this.onGetFile(file)
-			})
-		},
-		onDropFiles (event) {
-			const files = [...event.dataTransfer.files]
-			files.forEach((file) => {
-				this.onGetFile(file)
-			})
-		},
-		onGetFile (file) {
-			switch (file.type) {
-			case "application/pdf":
-				this.uploadPdf(file)
-				break
-			case "image/png":
-			case "image/jpeg":
-			case "image/svg+xml":
-				this.uploadImage(file)
-				break
-			default:
-				// eslint-disable-next-line no-console
-				console.error("Unknown file type.", file.type)
-			}
-		},
-		async uploadImage (file) {
-			const formData = new FormData()
-			formData.append("file", file)
-			const response = await this.$http.$post("/api/image/", formData)
+		onUploaded (input) {
 			this.resources.push({
 				type: "image",
-				url: response.url,
+				url: input,
 			})
 			this.$emit("input", this.resources)
 		},
-		async uploadPdf (file) {
-			const MAX_PORTFOLIO_PDF_IMAGE_WIDTH = 1920
-			// PDFファイルデータをArrayBuffer型で取得
-			const fileData = await this.readFileAsync(file)
-
-			// PDFファイルのパース
-			const pdf = await PDFJS.getDocument({
-				data: fileData,
-				cMapUrl: "/cmaps/",
-				cMapPacked: true,
-			})
-
-			// 1ページずつ処理
-			for (let i = 1; i <= pdf.numPages; i++) {
-				// canvasにレンダリング
-				const page = await pdf.getPage(i)
-				const canvas = this.$refs.canvas
-				let viewport = page.getViewport({ scale: 1 })
-				if (viewport.width > MAX_PORTFOLIO_PDF_IMAGE_WIDTH) {
-					const newScale = MAX_PORTFOLIO_PDF_IMAGE_WIDTH / viewport.width
-					viewport = page.getViewport({ scale: newScale })
-				}
-				canvas.height = viewport.height
-				canvas.width = viewport.width
-				const context = canvas.getContext("2d")
-				const task = page.render({
-					canvasContext: context,
-					viewport,
-				})
-				await task.promise
-
-				// canvasにレンダリングされた画像をファイル化
-				const base64 = canvas.toDataURL("image/png")
-				const tmp = base64.split(",")
-				const data = atob(tmp[1])
-				const mime = tmp[0].split(":")[1].split(";")[0]
-				const buf = new Uint8Array(data.length)
-				for (let i = 0; i < data.length; i++) {
-					buf[i] = data.charCodeAt(i)
-				}
-				const blob = new Blob([buf], { type: mime })
-				const imageFile = new File([blob], "image.png", {
-					lastModified: new Date().getTime(),
-				})
-				await this.uploadImage(imageFile)
-			}
-		},
-		readFileAsync (file) {
-			return new Promise((resolve, reject) => {
-				const reader = new FileReader()
-				reader.onload = () => {
-					resolve(reader.result)
-				}
-				reader.onerror = reject
-				reader.readAsArrayBuffer(file)
-			})
+		onClickFileSelectButton () {
+			this.$refs.upload.onClickFileSelectButton()
 		},
 	},
 }
 </script>
 <style lang="scss" scoped>
-.drop-wrap {
+.upload-box {
+	margin: 1rem 0;
 	width: 100%;
-	position: relative;
 
-	&::before {
-		content: "";
-		display: block;
-		padding-top: calc(100% / 16 * 9);
-	}
-
-	.drop-area {
-		width: 100%;
-		height: 100%;
-		//background-color: $main-color;
-		border: $main-color dashed 5px;
-		position: absolute;
-		top: 0;
-		left: 0;
+	p.buttons {
 		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
+		width: 100%;
+		padding: 0 5%;
+		justify-content: space-around;
 
-		p.upload-icon {
-			width: 20%;
-			margin: 5%;
+		button {
+			color: $main-color;
+			border: $main-color solid 3px;
+			background-color: transparent;
+			padding: 3% 0;
+			width: 38%;
+			cursor: pointer;
 
-			img {
-				width: 100%;
+			&:hover {
+				color: #fff;
+				background-color: $main-color;
 			}
 		}
-
-		.buttons {
-			width: 100%;
-
-			p {
-				display: flex;
-				width: 100%;
-				padding: 0 5%;
-				justify-content: space-around;
-
-				button {
-					color: $main-color;
-					border: $main-color solid 3px;
-					background-color: transparent;
-					padding: 3% 0;
-					width: 38%;
-					cursor: pointer;
-
-					&:hover {
-						color: #fff;
-						background-color: $main-color;
-					}
-				}
-			}
-		}
-	}
-
-	.pdf-render,
-	.file-input {
-		position: absolute;
-		visibility: hidden;
-		z-index: -99;
 	}
 }
+
 </style>

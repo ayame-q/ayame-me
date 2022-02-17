@@ -1,5 +1,5 @@
 <template>
-	<div id="works-detail">
+	<div id="work-detail">
 		<Work v-model="work" />
 	</div>
 </template>
@@ -8,20 +8,14 @@
 export default {
 	name: "WorkDetail",
 	scrollToTop: false,
+	async asyncData (context) {
+		const work = await context.$content("works", context.params.slug).fetch()
+		return { work }
+	},
 	head () {
 		return {
-			title: this.title,
+			title: this.work.title,
 		}
-	},
-	computed: {
-		work () {
-			return this.$store.getters["works/getAll"].find((item) => {
-				return item.slug === this.$route.params.slug
-			})
-		},
-		title () {
-			return this.work.title.replace("<br>", "")
-		},
 	},
 }
 </script>
