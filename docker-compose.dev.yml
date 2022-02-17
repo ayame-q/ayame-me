@@ -3,7 +3,7 @@ services:
   nodejs:
     volumes:
       - "./client/content:/usr/src/app/content"
-      - "./client/static/img/content:/usr/src/app/img/content"
+      - "./client/static/img/content:/usr/src/app/static/img/content"
   express:
     build: server
     env_file:
