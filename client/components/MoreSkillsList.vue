@@ -8,44 +8,71 @@
 							More Skills List
 						</h2>
 					</div>
-					<p v-if="isEditable" class="add">
-						<nuxt-link to="/skills/new">
-							<img src="@/assets/img/add-pink.svg" alt="+">
-						</nuxt-link>
-					</p>
-				</div>
-			</div>
-			<div class="content-wrap">
-				<div v-for="skill of skills" v-bind:key="skill.uuid" class="skill">
-					<nuxt-link v-bind:to="`/skills/${skill.slug}`">
-						<p class="icon">
-							<img v-bind:src="skill.icon">
+					<div v-if="isEditable" class="options">
+						<p>
+							<button class="save" v-on:click="onSave">
+								<img src="@/assets/img/save.svg" alt="保存">
+							</button>
+							<nuxt-link to="/skills/new" class="add">
+								<img src="@/assets/img/add-pink.svg" alt="+">
+							</nuxt-link>
 						</p>
-						<div class="detail">
-							<h3>{{ skill.title }}</h3>
-							<p class="star-wrap">
-								<span v-for="n of 3" v-bind:key="n" class="star" v-bind:class="{editable: isEditable}" v-on:click="setLevel(n)">
-									<img v-if="n <= skill.level" src="@/assets/img/star-full.svg" alt="★">
-									<img v-else src="@/assets/img/star-blank.svg" alt="☆">
-								</span>
-							</p>
-						</div>
-					</nuxt-link>
+					</div>
 				</div>
 			</div>
+			<div v-if="!isEditable" class="content-wrap">
+				<MoreSkillsListSkill v-for="(skill, index) of skills" v-bind:key="skill.uuid" v-model="skills[index]" v-bind:index="index" class="skill" />
+			</div>
+			<VueDraggable
+				v-if="isEditable"
+				v-model="skills"
+				class="content-wrap"
+			>
+				<MoreSkillsListSkill v-for="(skill, index) of skills" v-bind:key="skill.uuid" v-model="skills[index]" v-bind:index="index" class="skill" />
+			</VueDraggable>
 		</article>
 	</main>
 </template>
 
 <script>
+import VueDraggable from "vuedraggable"
 export default {
 	name: "MoreSkillsList",
-	computed: {
-		skills () {
-			return this.$store.getters.getSkills
+	components: { VueDraggable },
+	props: {
+		value: {
+			type: Array,
+			default () { return [] },
 		},
+	},
+	data () {
+		return {
+			skills: [],
+		}
+	},
+	computed: {
 		isEditable () {
 			return this.$store.getters["status/getIsEditable"]
+		},
+	},
+	watch: {
+		skills: {
+			handler (newValue) {
+				this.$emit("input", newValue)
+			},
+			deep: true,
+		},
+	},
+	created () {
+		this.skills = [...this.value]
+	},
+	methods: {
+		async onSave () {
+			for (const skill of this.skills) {
+				await this.$http.$patch(`/api/skills/${skill.slug}`, {
+					order: skill.order,
+				})
+			}
 		},
 	},
 }
@@ -77,19 +104,29 @@ main {
 				}
 			}
 
-			.add {
+			.options {
 				position: absolute;
 				top: 50%;
 				right: 20%;
 				transform: translateY(-50%);
 
-				a {
-					display: block;
-					text-decoration: none;
+				p {
+					display: flex;
+					align-items: center;
 
-					img {
-						width: 1rem;
-						height: 1rem;
+					a,
+					button {
+						display: block;
+						text-decoration: none;
+						background: none;
+						border: none;
+						margin: 0 0.5rem;
+						cursor: pointer;
+
+						img {
+							width: 1rem;
+							height: 1rem;
+						}
 					}
 				}
 			}
@@ -102,50 +139,6 @@ main {
 			.skill {
 				margin: 0.5rem 0;
 				width: 45%;
-
-				a {
-					display: flex;
-					align-items: center;
-					width: 100%;
-					text-decoration: none;
-
-					.icon {
-						width: 3rem;
-						height: 3rem;
-
-						img {
-							width: 100%;
-							height: 100%;
-						}
-					}
-
-					.detail {
-						margin-left: 0.7rem;
-
-						.star-wrap {
-							display: flex;
-							margin: 0.05rem 0;
-
-							.star {
-								width: 0.8rem;
-								margin: 0 0.3rem;
-
-								&:first-child {
-									margin-left: 0;
-								}
-
-								&.editable {
-									cursor: pointer;
-								}
-
-								img {
-									display: block;
-									width: 100%;
-								}
-							}
-						}
-					}
-				}
 			}
 		}
 	}

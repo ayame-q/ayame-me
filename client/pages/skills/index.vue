@@ -1,6 +1,6 @@
 <template>
 	<div class="skills-list">
-		<MoreSkillsList />
+		<MoreSkillsList v-model="skills" />
 	</div>
 </template>
 
@@ -8,6 +8,11 @@
 export default {
 	name: "Index",
 	scrollToTop: false,
+	async asyncData ({ $content }) {
+		const skills = await $content("skills").sortBy("order").fetch()
+		console.log(skills)
+		return { skills }
+	},
 }
 </script>
 
