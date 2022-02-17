@@ -12,6 +12,11 @@ export default {
 		const skills = await $content("skills").sortBy("order").fetch()
 		return { skills }
 	},
+	head () {
+		return {
+			title: "More Skills List",
+		}
+	},
 }
 </script>
 

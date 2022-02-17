@@ -25,6 +25,11 @@ export default {
 			},
 		}
 	},
+	head () {
+		return {
+			title: "Workを新規作成",
+		}
+	},
 	computed: {
 		isEditable () {
 			return this.$store.getters["status/getIsEditable"]
@@ -33,13 +38,13 @@ export default {
 	watch: {
 		isEditable () {
 			if (this.isEditable === false) {
-				return this.$nuxt.error({ statusCode: 404 })
+				return this.$nuxt.error({ statusCode: 403, message: "403 Forbidden." })
 			}
 		},
 	},
 	mounted () {
 		if (this.isEditable === false) {
-			return this.$nuxt.error({ statusCode: 404 })
+			return this.$nuxt.error({ statusCode: 403, message: "403 Forbidden." })
 		}
 	},
 }
