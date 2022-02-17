@@ -1,7 +1,21 @@
 <template>
-	<section id="works" ref="works" style="height: 260vh;">
+	<section id="works" ref="works" v-bind:style="{height: `${15 * works.length + 100}vh`}">
 		<div class="content" v-bind:class="{active: isWorksActive}">
-			<h2>Works</h2>
+			<div class="meta">
+				<h2>Works</h2>
+				<ul class="options">
+					<li v-if="isEditable">
+						<nuxt-link to="/works/order">
+							<img src="@/assets/img/order-gold.svg" alt="並び替え">
+						</nuxt-link>
+					</li>
+					<li v-if="isEditable">
+						<nuxt-link to="/works/new">
+							<img src="@/assets/img/add-gold.svg" alt="追加">
+						</nuxt-link>
+					</li>
+				</ul>
+			</div>
 			<div class="works-list">
 				<article v-for="(work, index) of works" v-bind:key="index" class="teacup">
 					<nuxt-link v-bind:to="`/works/${work.slug}`">
@@ -22,7 +36,7 @@
 				</article>
 				<div v-for="n of 12" v-bind:key="n" class="teacup">
 					<p>
-						<span v-if="n % 2 === 0">
+						<span v-if="n % 2 === (works.length % 2 === 0 ? 1 : 0)">
 							<img class="teacup-back" src="@/assets/img/teacup-pink-back.svg" alt="">
 							<img class="teacup-front" src="@/assets/img/teacup-pink-front.svg" alt="">
 						</span>
@@ -51,6 +65,11 @@ export default {
 		return {
 			isWorksActive: false,
 		}
+	},
+	computed: {
+		isEditable () {
+			return this.$store.getters["status/getIsEditable"]
+		},
 	},
 	watch: {
 		scrollY () {
@@ -132,6 +151,33 @@ export default {
 <style lang="scss" scoped>
 #works {
 	position: relative;
+
+	.meta {
+		display: flex;
+		width: 60vw;
+		height: 5rem;
+		justify-content: space-between;
+		align-items: center;
+
+		ul.options {
+			list-style: none;
+			display: flex;
+
+			li {
+				cursor: pointer;
+				margin: 0 1rem;
+
+				&:last-child {
+					margin-right: 0;
+				}
+
+				img {
+					display: block;
+					width: 1rem;
+				}
+			}
+		}
+	}
 
 	.content {
 		position: sticky;
