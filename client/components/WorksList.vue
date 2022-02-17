@@ -72,6 +72,14 @@ export default {
 		},
 	},
 	watch: {
+		works: {
+			handler (newValue) {
+				this.$nextTick(() => {
+					this.updateTeacup()
+				})
+			},
+			deep: true,
+		},
 		scrollY () {
 			if (this.isWorksActive) {
 				this.updateTeacup()

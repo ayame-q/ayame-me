@@ -27,11 +27,12 @@ export default {
 			scrollY: 0,
 			windowWidth: 0,
 			windowHeight: 0,
-			works: [],
 		}
 	},
-	async fetch () {
-		this.works = await this.$content("works").sortBy("order").fetch()
+	computed: {
+		works () {
+			return this.$store.getters.getWorks
+		},
 	},
 	mounted () {
 		this.loadWebFont()
