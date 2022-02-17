@@ -56,7 +56,7 @@
 				</div>
 				<Description v-model="work.description" class="description-wrap" v-bind:is-editable="isEditable" />
 			</div>
-			<SubmitButton v-model="work" api-type="works" root-path="/works/" v-bind:has-thumbnail="true" />
+			<SubmitButton v-if="isEditable" v-model="work" api-type="works" root-path="/works/" v-bind:has-thumbnail="true" />
 		</article>
 	</main>
 </template>

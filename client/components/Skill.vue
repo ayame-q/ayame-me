@@ -20,7 +20,7 @@
 				</div>
 			</div>
 			<Description v-model="skill.description" v-bind:is-editable="isEditable" />
-			<SubmitButton v-model="skill" api-type="skills" root-path="/skills/" />
+			<SubmitButton v-if="isEditable" v-model="skill" api-type="skills" root-path="/skills/" />
 		</article>
 	</main>
 </template>
