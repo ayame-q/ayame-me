@@ -49,7 +49,7 @@
 					</div>
 					<VueDraggable v-if="isEditable" v-model="work.resources">
 						<div v-for="(resource, index) of work.resources" v-bind:key="index">
-							<WorkResource v-bind:resource="resource" />
+							<WorkResource v-bind:resource="resource" v-on:delete="deleteResource(index)" />
 						</div>
 					</VueDraggable>
 					<UploadResource v-if="isEditable" v-model="work.resources" />
@@ -114,6 +114,9 @@ export default {
 		this.loadWebFont()
 	},
 	methods: {
+		deleteResource (index) {
+			this.work.resources.splice(index, 1)
+		},
 		deleteSkill (index) {
 			this.work.skills.splice(index, 1)
 		},

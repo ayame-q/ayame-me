@@ -12,6 +12,11 @@
 				allowfullscreen
 			/>
 		</div>
+		<p v-if="isEditable" class="delete">
+			<button v-on:click="$emit('delete')">
+				削除
+			</button>
+		</p>
 	</div>
 </template>
 
@@ -24,11 +29,18 @@ export default {
 			default () { return {} },
 		},
 	},
+	computed: {
+		isEditable () {
+			return this.$store.getters["status/getIsEditable"]
+		},
+	},
 }
 </script>
 
 <style lang="scss" scoped>
 .resource {
+	position: relative;
+
 	> div,
 	> p {
 		margin: 1rem 0;
@@ -50,6 +62,33 @@ export default {
 			height: 100%;
 			top: 0;
 			left: 0;
+		}
+	}
+
+	.delete {
+		display: none;
+		position: absolute;
+		top: 5%;
+		right: 5%;
+		margin: 0;
+
+		button {
+			display: block;
+			background: none;
+			border: none;
+			width: fit-content;
+			white-space: nowrap;
+			font-size: 1.2vw;
+			background-color: rgba($text-color, 0.7);
+			padding: 10%;
+			color: #fff;
+			cursor: pointer;
+		}
+	}
+
+	&:hover {
+		.delete {
+			display: block;
 		}
 	}
 }
