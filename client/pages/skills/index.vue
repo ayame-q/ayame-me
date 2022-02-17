@@ -10,7 +10,6 @@ export default {
 	scrollToTop: false,
 	async asyncData ({ $content }) {
 		const skills = await $content("skills").sortBy("order").fetch()
-		console.log(skills)
 		return { skills }
 	},
 }
