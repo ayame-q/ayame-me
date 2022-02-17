@@ -4,15 +4,19 @@
 			<button v-on:click="onClickFileSelectButton">
 				ファイルを選択
 			</button>
-			<button>Youtube動画を埋め込む</button>
+			<button v-on:click="isMovieModalOpen = true">
+				Youtube動画を埋め込む
+			</button>
 		</p>
+		<AddResourceMovieModal v-if="isMovieModalOpen" v-on:close="isMovieModalOpen = false" v-on:add="addResource" />
 	</Upload>
 </template>
 
 <script>
 import Upload from "~/components/edit/Upload"
+import AddResourceMovieModal from "~/components/edit/AddResourceMovieModal"
 export default {
-	components: { Upload },
+	components: { AddResourceMovieModal, Upload },
 	props: {
 		value: {
 			type: Array,
@@ -22,6 +26,7 @@ export default {
 	data () {
 		return {
 			resources: [],
+			isMovieModalOpen: false,
 		}
 	},
 	created () {
@@ -35,11 +40,16 @@ export default {
 			})
 			this.$emit("input", this.resources)
 		},
+		addResource (input) {
+			this.resources.push(input)
+			this.$emit("input", this.resources)
+		},
 		onClickFileSelectButton () {
 			this.$refs.upload.onClickFileSelectButton()
 		},
 	},
 }
+// TODO: Youtubeの並び替え対応
 </script>
 <style lang="scss" scoped>
 .upload-box {
