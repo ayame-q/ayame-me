@@ -8,8 +8,8 @@
 export default {
 	name: "WorkDetail",
 	scrollToTop: false,
-	async asyncData (context) {
-		const work = await context.$content("works", context.params.slug).fetch()
+	async asyncData ({ $content, params }) {
+		const work = await $content("works", params.slug).fetch()
 		return { work }
 	},
 	head () {

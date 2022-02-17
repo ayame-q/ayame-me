@@ -17,7 +17,7 @@
 				</ul>
 			</div>
 			<div class="works-list">
-				<article v-for="(work, index) of works" v-bind:key="index" class="teacup">
+				<article v-for="(work, index) of works" v-bind:key="work.uuid" class="teacup">
 					<nuxt-link v-bind:to="`/works/${work.slug}`">
 						<h3 v-html="work.title" />
 						<p class="subtitle" v-html="work.subTitle" />
