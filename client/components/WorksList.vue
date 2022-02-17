@@ -3,7 +3,7 @@
 		<div class="content" v-bind:class="{active: isWorksActive}">
 			<div class="meta">
 				<h2>Works</h2>
-				<ul class="options">
+				<ul class="options" v-bind:class="{active: isWorksActive}">
 					<li v-if="isEditable">
 						<nuxt-link to="/works/order">
 							<img src="@/assets/img/order-gold.svg" alt="並び替え">
@@ -162,6 +162,15 @@ export default {
 		ul.options {
 			list-style: none;
 			display: flex;
+			visibility: hidden;
+			opacity: 0;
+			transition: 0.2s;
+
+			&.active {
+				visibility: visible;
+				opacity: 1;
+				transition: 0.5s;
+			}
 
 			li {
 				cursor: pointer;
