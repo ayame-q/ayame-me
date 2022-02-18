@@ -6,7 +6,7 @@ services:
       - "./nginx/nginx.prod.conf:/etc/nginx/templates/default.conf.template"
       - "client_dist:/usr/src/app/client"
     restart: always
-  nodejs:
+  nuxtjs:
     volumes:
       - "client_dist:/usr/src/app/dist"
 

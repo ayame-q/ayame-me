@@ -7,10 +7,10 @@ services:
     volumes:
       - "./nginx/nginx.conf:/etc/nginx/templates/default.conf.template"
     links:
-      - "nodejs"
+      - "nuxtjs"
     ports:
       - "$PORT:80"
-  nodejs:
+  nuxtjs:
     build: client
     env_file:
       - ".env"
