@@ -47,9 +47,15 @@
 							<WorkResource v-bind:resource="resource" />
 						</div>
 					</div>
-					<VueDraggable v-if="isEditable" v-model="work.resources">
+					<VueDraggable
+						v-if="isEditable"
+						v-model="work.resources"
+						v-bind:class="{dragging: isResourcesDragging}"
+						v-on:clone="isResourcesDragging = true"
+						v-on:end="isResourcesDragging = false"
+					>
 						<div v-for="(resource, index) of work.resources" v-bind:key="index">
-							<WorkResource v-bind:resource="resource" v-on:delete="deleteResource(index)" />
+							<WorkResource v-bind:resource="resource" v-on:delete="deleteResource(index)" v-on:toggleOrderMode="isResourcesDragging = !isResourcesDragging" />
 						</div>
 					</VueDraggable>
 					<UploadResource v-if="isEditable" v-model="work.resources" />
@@ -92,6 +98,7 @@ export default {
 			isAddSkillModalOpen: false,
 			work: {},
 			isSkillsDragging: false,
+			isResourcesDragging: false,
 		}
 	},
 	computed: {
@@ -219,6 +226,30 @@ main {
 
 			.resources-wrap {
 				width: 40%;
+
+				.dragging {
+					::v-deep .youtube {
+						&::before {
+							content: "Youtube動画";
+							position: absolute;
+							width: 100%;
+							height: 100%;
+							top: 0;
+							left: 0;
+							background-color: $main-color;
+							z-index: 1100;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							font-size: 2rem;
+							color: #fff;
+						}
+
+						iframe {
+							display: none;
+						}
+					}
+				}
 			}
 
 			.description-wrap {

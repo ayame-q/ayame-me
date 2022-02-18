@@ -49,7 +49,6 @@ export default {
 		},
 	},
 }
-// TODO: Youtubeの並び替え対応
 </script>
 <style lang="scss" scoped>
 .upload-box {

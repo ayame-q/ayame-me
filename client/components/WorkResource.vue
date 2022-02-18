@@ -12,7 +12,10 @@
 				allowfullscreen
 			/>
 		</div>
-		<p v-if="isEditable" class="delete">
+		<p v-if="isEditable" class="options">
+			<button v-if="resource.type === 'youtube'" v-on:click="$emit('toggleOrderMode')">
+				並び替え
+			</button>
 			<button v-on:click="$emit('delete')">
 				削除
 			</button>
@@ -65,30 +68,32 @@ export default {
 		}
 	}
 
-	.delete {
+	.options {
 		display: none;
 		position: absolute;
 		top: 5%;
 		right: 5%;
 		margin: 0;
+		z-index: 1101;
 
 		button {
-			display: block;
+			display: inline-block;
 			background: none;
 			border: none;
 			width: fit-content;
 			white-space: nowrap;
 			font-size: 1.2vw;
 			background-color: rgba($text-color, 0.7);
-			padding: 10%;
+			padding: 0.3rem;
 			color: #fff;
 			cursor: pointer;
+			margin-left: 0.3rem;
 		}
 	}
 
 	&:hover {
-		.delete {
-			display: block;
+		.options {
+			display: flex;
 		}
 	}
 }
