@@ -158,18 +158,6 @@ app.post("/image/", upload.single("file"), (req, res) => {
 	})
 })
 
-app.delete("/image/", (req, res, next) => {
-	const filePath = getImageFilePathFromUrl(req.body.url)
-	console.log(`[${req.method}: ${req.path}]`, filePath)
-	fs.unlink(filePath)
-		.then(content => {
-			res.json({url: req.body.url})
-		})
-		.catch(err => {
-			next(err)
-		})
-})
-
 process.on("SIGTERM", async () => {
 	const images = []
 
