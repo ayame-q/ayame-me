@@ -7,7 +7,7 @@
 			<div class="detail">
 				<h3>{{ skill.title }}</h3>
 				<p class="star-wrap">
-					<span v-for="n of 3" v-bind:key="n" class="star" v-bind:class="{editable: isEditable}" v-on:click="setLevel(n)">
+					<span v-for="n of 3" v-bind:key="n" class="star">
 						<img v-if="n <= skill.level" src="@/assets/img/star-full.svg" alt="★">
 						<img v-else src="@/assets/img/star-blank.svg" alt="☆">
 					</span>
@@ -66,10 +66,12 @@ export default {
 		.icon {
 			width: 3rem;
 			height: 3rem;
+			display: flex;
+			align-items: center;
 
 			img {
 				width: 100%;
-				height: 100%;
+				max-height: 100%;
 			}
 		}
 
@@ -86,10 +88,6 @@ export default {
 
 					&:first-child {
 						margin-left: 0;
-					}
-
-					&.editable {
-						cursor: pointer;
 					}
 
 					img {
