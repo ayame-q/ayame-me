@@ -34,11 +34,11 @@ export default {
 	},
 	computed: {
 		videoId () {
-			const matchFullUrl = this.url.match(/youtube\.com\/watch\?(.+&)?v=([0-9a-zA-Z]+)(&.+)?$/)
+			const matchFullUrl = this.url.match(/youtube\.com\/watch\?(.+&)?v=([0-9a-zA-Z_-]+)(&.+)?$/)
 			if (matchFullUrl) {
 				return matchFullUrl[2]
 			}
-			const matchShortUrl = this.url.match(/youtu\.be\/([0-9a-zA-Z]+)(\?.+)?$/)
+			const matchShortUrl = this.url.match(/youtu\.be\/([0-9a-zA-Z_-]+)(\?.+)?$/)
 			if (matchShortUrl) {
 				return matchShortUrl[1]
 			}
