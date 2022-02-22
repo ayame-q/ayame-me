@@ -220,6 +220,7 @@ export default {
 				z-index: 4;
 				font-size: 1.2em;
 				line-height: 1em;
+				white-space: pre;
 			}
 
 			p.subtitle {
@@ -230,6 +231,7 @@ export default {
 				transform: translateX(-50%);
 				z-index: 4;
 				font-size: 1em;
+				white-space: pre;
 			}
 
 			img.thumbnail {

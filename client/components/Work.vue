@@ -156,6 +156,19 @@ main {
 				align-items: baseline;
 				flex-shrink: 0;
 
+				h2,
+				p.subtitle {
+					::v-deep br {
+						content: "";
+					}
+
+					.contenteditable-wrap:focus {
+						&::v-deep br {
+							content: none;
+						}
+					}
+				}
+
 				p.subtitle {
 					margin: 0;
 					margin-left: 0.5em;
