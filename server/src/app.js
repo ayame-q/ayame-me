@@ -169,7 +169,9 @@ process.on("SIGTERM", async () => {
 			const fileData = JSON.parse(await fs.readFile(filePath, "utf8"))
 			images.push(getImageFilePathFromUrl(fileData.thumbnail))
 			for (const resource of fileData.resources) {
-				images.push(getImageFilePathFromUrl(resource.url))
+				if (resource.type === "image") {
+					images.push(getImageFilePathFromUrl(resource.url))
+				}
 			}
 		}
 	}
