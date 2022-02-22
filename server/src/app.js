@@ -167,6 +167,7 @@ process.on("SIGTERM", async () => {
 		if (fileName.match(/\.json$/)) {
 			const filePath = path.join(contentPath, "/works/", fileName)
 			const fileData = JSON.parse(await fs.readFile(filePath, "utf8"))
+			images.push(getImageFilePathFromUrl(fileData.thumbnail))
 			for (const resource of fileData.resources) {
 				images.push(getImageFilePathFromUrl(resource.url))
 			}
