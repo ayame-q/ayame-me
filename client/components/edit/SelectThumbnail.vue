@@ -53,6 +53,10 @@ export default {
 	},
 	created () {
 		this.obj = { ...this.value }
+		const resouceImages = this.obj.resources.filter(item => item.type === "image").map(item => item.url)
+		if (!resouceImages.includes(this.obj.thumbnail)) {
+			this.uploadedImage = this.obj.thumbnail
+		}
 	},
 	methods: {
 		onUploaded (input) {
