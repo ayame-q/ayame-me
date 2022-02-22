@@ -10,6 +10,8 @@ RUN chmod 755 /usr/local/bin/entrypoint.sh
 
 RUN cp -rf /usr/src/app/node_modules/pdfjs-dist/cmaps /usr/src/app/static/
 
+RUN chown -R node /app/node_modules
+
 ENV HOST 0.0.0.0
 EXPOSE 3000
 
