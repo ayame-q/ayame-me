@@ -39,9 +39,9 @@ export default {
 			this.$refs.fileInput.click()
 		},
 		onSelectFiles (event) {
-			Array.prototype.forEach.call(event.target.files, (file) => {
+			for (const file of event.target.files) {
 				this.onGetFile(file)
-			})
+			}
 		},
 		onDropFiles (event) {
 			const files = [...event.dataTransfer.files]
