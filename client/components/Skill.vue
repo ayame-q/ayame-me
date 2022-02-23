@@ -26,7 +26,7 @@
 				</div>
 			</div>
 			<Description v-model="skill.description" v-bind:is-editable="isEditable" />
-			<div v-if="skill.works.length > 0" class="works-wrap">
+			<div v-if="skill.works && skill.works.length > 0" class="works-wrap">
 				<h3>Works</h3>
 				<div class="works">
 					<nuxt-link v-for="work of skill.works" v-bind:key="work.uuid" v-bind:to="`/works/${work.slug}`">
