@@ -1,6 +1,6 @@
 const express = require("express")
 const fs = require("fs").promises
-const multer = require('multer')
+const multer = require("multer")
 const uuid = require("uuid").v4
 const path = require("path")
 
@@ -16,8 +16,8 @@ const upload = multer({
 		filename(req, file, cb) {
 			const ext = file.originalname.match(/(\.[^.]+?)$/)[1]
 			cb(null, uuid() + ext)
-		}
-	})
+		},
+	}),
 })
 const port = process.env.PORT
 
@@ -154,7 +154,7 @@ app.post("/image/", upload.single("file"), (req, res) => {
 	console.log(`[${req.method}: ${req.path}]`, filePath)
 	res.json({
 		"type": "image",
-		"url": imageUrl + req.file.filename
+		"url": imageUrl + req.file.filename,
 	})
 })
 

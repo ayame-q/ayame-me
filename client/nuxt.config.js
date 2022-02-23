@@ -78,13 +78,13 @@ export default {
 	// Modules: https://go.nuxtjs.dev/config-modules
 	modules: [
 		// https://content.nuxtjs.org/ja/
-		'@nuxt/content',
+		"@nuxt/content",
 		// https://http.nuxtjs.org/
-		'@nuxt/http',
+		"@nuxt/http",
 		// https://github.com/rigor789/vue-scrollto
 		"vue-scrollto/nuxt",
 		// https://github.com/nuxt-community/google-gtag-module
-		'@nuxtjs/google-gtag',
+		"@nuxtjs/google-gtag",
 	],
 
 	content: {
@@ -107,18 +107,17 @@ export default {
 	"google-gtag": {
 		id: "UA-97540933-2",
 		additionalAccounts: [{
-			id: 'G-M9BBX4E3PP',
-		}]
+			id: "G-M9BBX4E3PP",
+		}],
 	},
-
 
 	generate: {
 		async routes () {
-			const { $content } = require('@nuxt/content')
-			const files = await $content().only(['path']).fetch()
+			const { $content } = require("@nuxt/content")
+			const files = await $content().only(["path"]).fetch()
 
-			return files.map(file => file.path === '/index' ? '/' : file.path)
-		}
+			return files.map(file => file.path === "/index" ? "/" : file.path)
+		},
 	},
 
 	// Build Configuration: https://go.nuxtjs.dev/config-build
