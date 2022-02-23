@@ -26,6 +26,16 @@
 				</div>
 			</div>
 			<Description v-model="skill.description" v-bind:is-editable="isEditable" />
+			<div v-if="skill.works" class="works-wrap">
+				<h3>Works</h3>
+				<div class="works">
+					<nuxt-link v-for="work of skill.works" v-bind:key="work.uuid" v-bind:to="`/works/${work.slug}`">
+						<article>
+							<p><img v-bind:src="work.thumbnail" alt=""></p>
+						</article>
+					</nuxt-link>
+				</div>
+			</div>
 			<SubmitButton v-if="isEditable" v-model="skill" api-type="skills" root-path="/skills/" />
 		</article>
 	</main>
@@ -104,7 +114,7 @@ h2 {
 }
 
 main {
-	article {
+	> article {
 		height: 100%;
 
 		.meta {
@@ -192,6 +202,33 @@ main {
 		.text-wrap {
 			width: 100%;
 			height: fit-content;
+		}
+
+		.works-wrap {
+			h3 {
+				margin: 1rem 0;
+				font-size: 1.35em;
+			}
+
+			.works {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 20px;
+				width: 100%;
+
+				a {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+
+					article {
+						img {
+							display: block;
+							width: 100%;
+						}
+					}
+				}
+			}
 		}
 	}
 }

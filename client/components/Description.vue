@@ -86,6 +86,7 @@ export default {
 	.editor {
 		&::v-deep {
 			.CodeMirror {
+				height: fit-content;
 				color: $text-color;
 				background-color: transparent;
 				border: none;
@@ -102,6 +103,11 @@ export default {
 
 				.CodeMirror-line {
 					padding: 0;
+				}
+
+				.CodeMirror-scroll {
+					min-height: 4em !important;
+					height: fit-content;
 				}
 			}
 
