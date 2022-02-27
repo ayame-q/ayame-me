@@ -80,6 +80,12 @@ export default {
 	},
 	mounted () {
 		this.hooper = this.$refs.hooper
+		if (this.$route.query.fullscreen !== undefined) {
+			const url = new URL(window.location.href)
+			url.searchParams.delete("fullscreen")
+			history.replaceState("", "", url.pathname)
+			this.activeIndex = 0
+		}
 	},
 	methods: {
 		open (index) {
