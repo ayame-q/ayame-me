@@ -15,7 +15,13 @@
 		<div class="will-house">
 			<div class="text">
 				<p>
-					<a href="mailto:s1f101900879@toyo.jp">Thank you for reading!</a>
+					最後までご覧いただきありがとうございます。<br>
+					もし興味を持っていただきましたら<br>
+					お気軽に
+					<a href="mailto:s1f101900879@toyo.jp">メール</a>
+					や
+					<a href="https://www.linkedin.com/in/ayame-tatematsu" target="_blank">Linkedin</a>
+					などでご連絡ください！
 				</p>
 			</div>
 		</div>
@@ -69,13 +75,14 @@ export default {
 		position: absolute;
 		right: 2vw;
 
-		a {
-			font-size: 1.7rem;
+		p {
+			font-size: 1.2rem;
 			position: absolute;
 			left: 43%;
 			top: 73%;
 			transform: translateX(-50%) translateY(-50%);
 			text-decoration: none;
+			width: fit-content;
 		}
 	}
 }
