@@ -44,24 +44,41 @@
 				<div class="resources-wrap">
 					<div v-if="!isEditable">
 						<div v-for="(resource, index) of work.resources" v-bind:key="index">
-							<WorkResource v-bind:resource="resource" />
+							<WorkResource v-bind:resource="resource" class="resource" v-on:click="$refs.fullscreen.open(index)" />
 						</div>
 					</div>
 					<VueDraggable
 						v-if="isEditable"
 						v-model="work.resources"
-						v-bind:class="{dragging: isResourcesDragging}"
 						v-on:clone="isResourcesDragging = true"
 						v-on:end="isResourcesDragging = false"
 					>
 						<div v-for="(resource, index) of work.resources" v-bind:key="index">
-							<WorkResource v-bind:resource="resource" v-on:delete="deleteResource(index)" v-on:toggleOrderMode="isResourcesDragging = !isResourcesDragging" />
+							<WorkResource
+								v-bind:resource="resource"
+								v-bind:is-thumbnail="isResourcesDragging"
+								class="resource"
+								v-bind:class="{editable: isEditable}"
+							>
+								<p class="options">
+									<button v-if="resource.type === 'youtube'" v-on:click="isResourcesDragging = !isResourcesDragging">
+										並び替え
+									</button>
+									<button v-on:click="deleteResource(index)">
+										削除
+									</button>
+								</p>
+								<p class="fullscreen">
+									<button v-on:click="$refs.fullscreen.open(index)" />
+								</p>
+							</WorkResource>
 						</div>
 					</VueDraggable>
 					<UploadResource v-if="isEditable" v-model="work.resources" />
 				</div>
 				<Description v-model="work.description" class="description-wrap" v-bind:is-editable="isEditable" />
 			</div>
+			<WorkResourceFullScreen ref="fullscreen" v-bind:resources="work.resources" />
 			<SubmitButton v-if="isEditable" v-model="work" api-type="works" root-path="/works/" v-bind:has-thumbnail="true" />
 		</article>
 	</main>
@@ -240,26 +257,74 @@ main {
 			.resources-wrap {
 				width: 40%;
 
-				.dragging {
-					::v-deep .youtube {
-						&::before {
-							content: "Youtube動画";
-							position: absolute;
-							width: 100%;
-							height: 100%;
-							top: 0;
-							left: 0;
-							background-color: $main-color;
-							z-index: 1100;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							font-size: 2rem;
-							color: #fff;
+				.resource {
+					position: relative;
+					margin: 1rem 0;
+
+					&:not(.editable) {
+						cursor: pointer;
+					}
+
+					.options,
+					.fullscreen {
+						display: none;
+						position: absolute;
+						right: 3%;
+						margin: 0;
+						z-index: 1101;
+
+						&.options {
+							top: 5%;
 						}
 
-						iframe {
-							display: none;
+						&.fullscreen {
+							bottom: 5%;
+						}
+
+						button {
+							display: inline-block;
+							background: none;
+							border: none;
+							width: fit-content;
+							white-space: nowrap;
+							font-size: 1.2vw;
+							background-color: rgba($text-color, 0.7);
+							padding: 0.3rem;
+							color: #fff;
+							cursor: pointer;
+							margin-left: 0.3rem;
+
+							img {
+								width: 1rem;
+							}
+						}
+					}
+
+					&:hover {
+						.options {
+							display: flex;
+						}
+
+						.fullscreen {
+							display: block;
+						}
+
+						&:not(.editable)::before,
+						.fullscreen button {
+							content: "";
+							display: flex;
+							width: 1.3rem;
+							height: 1.3rem;
+							border-radius: 0.2rem;
+							background: $text-color;
+							opacity: 0.7;
+							position: absolute;
+							bottom: 5%;
+							right: 3%;
+							background-image: url("~/assets/img/fullscreen.svg");
+							background-repeat: no-repeat;
+							background-size: contain;
+							background-position: center;
 						}
 					}
 				}

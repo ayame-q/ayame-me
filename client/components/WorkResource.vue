@@ -1,25 +1,22 @@
 <template>
-	<div class="resource">
+	<div class="resource" v-on:click="$emit('click')">
 		<p v-if="resource.type === 'image'">
 			<img v-bind:src="resource.url" alt="">
 		</p>
 		<div v-if="resource.type === 'youtube'" class="youtube">
 			<iframe
+				v-if="!isThumbnail"
 				v-bind:src="`https://www.youtube.com/embed/${resource.videoId}`"
 				title="YouTube video player"
 				frameborder="0"
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 				allowfullscreen
 			/>
+			<p v-if="isThumbnail" class="thumbnail">
+				<img v-bind:src="`https://img.youtube.com/vi/${resource.videoId}/maxresdefault.jpg`" alt="">
+			</p>
 		</div>
-		<p v-if="isEditable" class="options">
-			<button v-if="resource.type === 'youtube'" v-on:click="$emit('toggleOrderMode')">
-				並び替え
-			</button>
-			<button v-on:click="$emit('delete')">
-				削除
-			</button>
-		</p>
+		<slot />
 	</div>
 </template>
 
@@ -30,6 +27,10 @@ export default {
 		resource: {
 			type: Object,
 			default () { return {} },
+		},
+		isThumbnail: {
+			type: Boolean,
+			default () { return false },
 		},
 	},
 	computed: {
@@ -46,11 +47,12 @@ export default {
 
 	> div,
 	> p {
-		margin: 1rem 0;
+		margin: 0;
 	}
 
 	img {
 		width: 100%;
+		display: block;
 	}
 
 	.youtube {
@@ -59,41 +61,13 @@ export default {
 		height: 0;
 		padding-top: 56.25%;
 
-		iframe {
+		iframe,
+		.thumbnail {
 			position: absolute;
 			width: 100%;
 			height: 100%;
 			top: 0;
 			left: 0;
-		}
-	}
-
-	.options {
-		display: none;
-		position: absolute;
-		top: 5%;
-		right: 5%;
-		margin: 0;
-		z-index: 1101;
-
-		button {
-			display: inline-block;
-			background: none;
-			border: none;
-			width: fit-content;
-			white-space: nowrap;
-			font-size: 1.2vw;
-			background-color: rgba($text-color, 0.7);
-			padding: 0.3rem;
-			color: #fff;
-			cursor: pointer;
-			margin-left: 0.3rem;
-		}
-	}
-
-	&:hover {
-		.options {
-			display: flex;
 		}
 	}
 }
