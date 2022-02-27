@@ -1,21 +1,33 @@
 <template>
 	<div v-if="activeIndex !== null" class="resource-fullscreen-wrap">
-		<div class="resources-list">
+		<div class="resources-list" v-on:mouseover="isListActive = true" v-on:mouseleave="isListActive = false">
 			<div
 				v-for="(resource, index) of resources"
 				v-bind:key="index"
-				class="resource"
+				class="resources-list-resource-wrap"
 				v-bind:class="{active: index === activeIndex}"
 				v-on:click="activeIndex = index"
 			>
 				<WorkResource
 					v-bind:resource="resource"
 					v-bind:is-thumbnail="true"
+					class="resources-list-resource"
 				/>
 			</div>
 		</div>
-		<div class="resource-wrap">
-			<WorkResource v-bind:resource="resources[activeIndex]" class="resource" />
+		<div class="hooper-wrap">
+			<Hooper
+				ref="hooper"
+				class="hooper"
+				v-bind:center-mode="true"
+				v-bind:vertical="true"
+				transition="100"
+				v-on:slide="onSlide"
+			>
+				<Slide v-for="(resource, index) of resources" v-bind:key="index" class="resource-wrap">
+					<WorkResource v-bind:resource="resource" class="resource" />
+				</Slide>
+			</Hooper>
 		</div>
 		<button class="close" v-on:click="activeIndex = null">
 			<img src="@/assets/img/close.svg" alt="閉じる">
@@ -24,8 +36,15 @@
 </template>
 
 <script>
+import { Hooper, Slide } from "hooper"
+import "hooper/dist/hooper.css"
+
 export default {
 	name: "WorkResourceFullScreen",
+	components: {
+		Hooper,
+		Slide,
+	},
 	props: {
 		resources: {
 			type: Array,
@@ -35,7 +54,30 @@ export default {
 	data () {
 		return {
 			activeIndex: null,
+			hooper: null,
+			isListActive: false,
 		}
+	},
+	watch: {
+		activeIndex (newIndex, oldIndex) {
+			this.$nextTick(() => {
+				if (oldIndex === null && newIndex !== null) {
+					this.hooper = this.$refs.hooper
+				}
+				if (newIndex === null) {
+					this.hooper = null
+				}
+				if (this.hooper) {
+					this.hooper.slideTo(newIndex)
+				}
+				if (!this.isListActive) {
+					this.scrollToList(newIndex)
+				}
+			})
+		},
+	},
+	mounted () {
+		this.hooper = this.$refs.hooper
 	},
 	methods: {
 		open (index) {
@@ -43,6 +85,15 @@ export default {
 		},
 		close () {
 			this.activeIndex = null
+		},
+		onSlide ({ currentSlide }) {
+			this.activeIndex = currentSlide
+		},
+		scrollToList (index) {
+			if (this.activeIndex !== null) {
+				const resourceWrapElements = document.getElementsByClassName("resources-list-resource-wrap")
+				resourceWrapElements[index].scrollIntoView({ block: "center", behavior: "smooth" })
+			}
 		},
 	},
 }
@@ -65,8 +116,8 @@ export default {
 		overflow-y: scroll;
 		background-color: $main-color;
 
-		.resource {
-			padding: 0.5rem 8%;
+		.resources-list-resource-wrap {
+			padding: 0.8rem 13%;
 
 			&.active {
 				background-color: rgba(#fff, 0.3);
@@ -74,18 +125,28 @@ export default {
 		}
 	}
 
-	.resource-wrap {
+	.hooper-wrap {
 		width: 85%;
 		height: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
 		background-color: $board-color;
 
-		.resource {
-			width: 85%;
-			max-height: 95%;
-			overflow-y: scroll;
+		.hooper {
+			width: 100%;
+			height: 100%;
+
+			.resource-wrap {
+				display: flex;
+				width: 100%;
+				height: 100%;
+				justify-content: center;
+				align-items: center;
+
+				.resource {
+					width: 85%;
+					max-height: 95%;
+					overflow-y: scroll;
+				}
+			}
 		}
 	}
 
