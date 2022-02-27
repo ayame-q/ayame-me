@@ -1,5 +1,5 @@
 <template>
-	<div v-if="activeIndex !== null" class="resource-fullscreen-wrap">
+	<div v-if="activeIndex !== null" ref="wrap" class="resource-fullscreen-wrap">
 		<div class="resources-list" v-on:mouseover="isListActive = true" v-on:mouseleave="isListActive = false">
 			<div
 				v-for="(resource, index) of resources"
@@ -29,7 +29,7 @@
 				</Slide>
 			</Hooper>
 		</div>
-		<button class="close" v-on:click="activeIndex = null">
+		<button class="close" v-on:click="close">
 			<img src="@/assets/img/close.svg" alt="閉じる">
 		</button>
 	</div>
@@ -63,8 +63,10 @@ export default {
 			this.$nextTick(() => {
 				if (oldIndex === null && newIndex !== null) {
 					this.hooper = this.$refs.hooper
+					document.addEventListener("keydown", this.onKeyDown)
 				}
 				if (newIndex === null) {
+					document.removeEventListener("keydown", this.onKeyDown)
 					this.hooper = null
 				}
 				if (this.hooper) {
@@ -85,6 +87,11 @@ export default {
 		},
 		close () {
 			this.activeIndex = null
+		},
+		onKeyDown (event) {
+			if (event.key === "Escape") {
+				this.close()
+			}
 		},
 		onSlide ({ currentSlide }) {
 			this.activeIndex = currentSlide
@@ -109,6 +116,7 @@ export default {
 	z-index: 9999;
 	display: flex;
 	align-items: center;
+	transform: translateZ(1px);
 
 	.resources-list {
 		width: 15%;

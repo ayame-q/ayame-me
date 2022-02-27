@@ -44,7 +44,7 @@
 				<div class="resources-wrap">
 					<div v-if="!isEditable">
 						<div v-for="(resource, index) of work.resources" v-bind:key="index">
-							<WorkResource v-bind:resource="resource" class="resource" v-on:click="$refs.fullscreen.open(index)" />
+							<WorkResource v-bind:resource="resource" class="resource" v-on:click="openFullScreenResource(index)" />
 						</div>
 					</div>
 					<VueDraggable
@@ -143,6 +143,9 @@ export default {
 		},
 		deleteSkill (index) {
 			this.work.skills.splice(index, 1)
+		},
+		openFullScreenResource (index) {
+			this.$refs.fullscreen.open(index)
 		},
 		loadWebFont () {
 			/* global Ts */
