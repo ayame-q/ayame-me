@@ -258,7 +258,7 @@ main {
 			justify-content: space-between;
 
 			.resources-wrap {
-				width: 40%;
+				width: 65%;
 
 				.resource {
 					position: relative;
@@ -334,8 +334,9 @@ main {
 			}
 
 			.description-wrap {
-				width: 55%;
+				width: 32%;
 				height: fit-content;
+				font-size: 14px;
 			}
 		}
 	}
