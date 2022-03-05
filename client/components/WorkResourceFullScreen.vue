@@ -1,37 +1,41 @@
 <template>
-	<div v-if="activeIndex !== null" ref="wrap" class="resource-fullscreen-wrap">
-		<div class="resources-list" v-on:mouseover="isListActive = true" v-on:mouseleave="isListActive = false">
-			<div
-				v-for="(resource, index) of resources"
-				v-bind:key="index"
-				class="resources-list-resource-wrap"
-				v-bind:class="{active: index === activeIndex}"
-				v-on:click="activeIndex = index"
-			>
-				<WorkResource
-					v-bind:resource="resource"
-					v-bind:is-thumbnail="true"
-					class="resources-list-resource"
-				/>
+	<div v-if="activeIndex !== null">
+		<portal to="portal-modal">
+			<div ref="wrap" class="resource-fullscreen-wrap">
+				<div class="resources-list" v-on:mouseover="isListActive = true" v-on:mouseleave="isListActive = false">
+					<div
+						v-for="(resource, index) of resources"
+						v-bind:key="index"
+						class="resources-list-resource-wrap"
+						v-bind:class="{active: index === activeIndex}"
+						v-on:click="activeIndex = index"
+					>
+						<WorkResource
+							v-bind:resource="resource"
+							v-bind:is-thumbnail="true"
+							class="resources-list-resource"
+						/>
+					</div>
+				</div>
+				<div class="hooper-wrap">
+					<Hooper
+						ref="hooper"
+						class="hooper"
+						v-bind:center-mode="true"
+						v-bind:vertical="true"
+						transition="100"
+						v-on:slide="onSlide"
+					>
+						<Slide v-for="(resource, index) of resources" v-bind:key="index" class="resource-wrap">
+							<WorkResource v-bind:resource="resource" class="resource" />
+						</Slide>
+					</Hooper>
+				</div>
+				<button class="close" v-on:click="close">
+					<img src="@/assets/img/close.svg" alt="閉じる">
+				</button>
 			</div>
-		</div>
-		<div class="hooper-wrap">
-			<Hooper
-				ref="hooper"
-				class="hooper"
-				v-bind:center-mode="true"
-				v-bind:vertical="true"
-				transition="100"
-				v-on:slide="onSlide"
-			>
-				<Slide v-for="(resource, index) of resources" v-bind:key="index" class="resource-wrap">
-					<WorkResource v-bind:resource="resource" class="resource" />
-				</Slide>
-			</Hooper>
-		</div>
-		<button class="close" v-on:click="close">
-			<img src="@/assets/img/close.svg" alt="閉じる">
-		</button>
+		</portal>
 	</div>
 </template>
 

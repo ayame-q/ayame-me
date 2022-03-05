@@ -83,6 +83,8 @@ export default {
 		"@nuxt/http",
 		// https://github.com/rigor789/vue-scrollto
 		"vue-scrollto/nuxt",
+		// https://portal-vue.linusb.org
+		"portal-vue/nuxt",
 		// https://github.com/nuxt-community/google-gtag-module
 		"@nuxtjs/google-gtag",
 	],
