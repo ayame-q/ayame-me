@@ -12,6 +12,7 @@
 			v-bind:class="{ active: isModal }"
 			v-on:click="closeModal"
 		/>
+		<portal-target name="portal-modal"/>
 		<!--
 		<div id="loading" v-bind:class="{active: !isLoaded}">
 		</div>
