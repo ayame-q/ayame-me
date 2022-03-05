@@ -71,7 +71,8 @@ export default {
 			this.$emit("uploaded", response.url)
 		},
 		async uploadPdf (file) {
-			const MAX_PORTFOLIO_PDF_IMAGE_WIDTH = 1920
+			const MIN_PORTFOLIO_PDF_IMAGE_WIDTH = 1920
+			const MAX_PORTFOLIO_PDF_IMAGE_WIDTH = 3840
 			// PDFファイルデータをArrayBuffer型で取得
 			const fileData = await this.readFileAsync(file)
 
@@ -88,7 +89,10 @@ export default {
 				const page = await pdf.getPage(i)
 				const canvas = this.$refs.canvas
 				let viewport = page.getViewport({ scale: 1 })
-				if (viewport.width > MAX_PORTFOLIO_PDF_IMAGE_WIDTH) {
+				if (viewport.width < MIN_PORTFOLIO_PDF_IMAGE_WIDTH) {
+					const newScale = MIN_PORTFOLIO_PDF_IMAGE_WIDTH / viewport.width
+					viewport = page.getViewport({ scale: newScale })
+				} else if (viewport.width > MAX_PORTFOLIO_PDF_IMAGE_WIDTH) {
 					const newScale = MAX_PORTFOLIO_PDF_IMAGE_WIDTH / viewport.width
 					viewport = page.getViewport({ scale: newScale })
 				}
