@@ -336,7 +336,7 @@ main {
 			.description-wrap {
 				width: 32%;
 				height: fit-content;
-				font-size: 14px;
+				font-size: max(0.65rem, 14px);
 			}
 		}
 	}
