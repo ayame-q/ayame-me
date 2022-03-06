@@ -101,6 +101,14 @@ export default {
 		onKeyDown (event) {
 			if (event.key === "Escape") {
 				this.close()
+			} else if (event.key === "ArrowDown") {
+				if (this.activeIndex < this.resources.length - 1) {
+					this.activeIndex++
+				}
+			} else if (event.key === "ArrowUp") {
+				if (this.activeIndex > 0) {
+					this.activeIndex--
+				}
 			}
 		},
 		onSlide ({ currentSlide }) {
