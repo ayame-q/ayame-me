@@ -23,6 +23,7 @@
 						class="hooper"
 						v-bind:center-mode="true"
 						v-bind:vertical="true"
+						v-bind:keys-control="false"
 						transition="100"
 						v-on:slide="onSlide"
 					>
