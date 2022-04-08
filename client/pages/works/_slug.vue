@@ -18,7 +18,7 @@ export default {
 			title: this.work.title,
 			meta: [
 				{ hid: "description", name: "description", content: description },
-				{ hid: "og:title", property: "og:title", content: `${this.work.title} - ayame.me` },
+				{ hid: "og:title", property: "og:title", content: `${this.work.title.replaceAll("\n", "")} - ayame.me` },
 				{ hid: "og:description", property: "og:description", content: description },
 				{ hid: "og:image", property: "og:image", content: `https://ayame.me${this.work.thumbnail}` },
 			],
