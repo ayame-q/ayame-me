@@ -6,7 +6,7 @@
 				<a href="mailto:s1f101900879@toyo.jp"><img src="@/assets/img/balloon-mail.svg" alt="Email"></a>
 			</li>
 			<li class="balloon">
-				<a href="https://student.redesigner.jp/students/a712f2d416eccc924a60f0b5b1f542fc" target="_blank"><img src="@/assets/img/balloon-redesigner.svg" alt="ReDesigner"></a>
+				<a href="https://twitter.com/ayame_q" target="_blank"><img src="@/assets/img/balloon-twitter.svg" alt="Twitter"></a>
 			</li>
 			<li class="balloon">
 				<a href="https://www.wantedly.com/users/28464463" target="_blank"><img src="@/assets/img/balloon-wantedly.svg" alt="Wantedly"></a>
@@ -16,11 +16,8 @@
 			<div class="text">
 				<p>
 					最後までご覧いただきありがとうございます。<br>
-					もし興味を持っていただきましたら<br>
-					お気軽に
-					<a href="mailto:s1f101900879@toyo.jp">メール</a>
-					や
-					<a href="https://www.linkedin.com/in/ayame-tatematsu" target="_blank">Linkedin</a>
+					もし興味を持っていただきましたら、ぜひお気軽に<br>
+					<a href="mailto:s1f101900879@toyo.jp">メール</a>、<a href="https://www.linkedin.com/in/ayame-tatematsu" target="_blank">Linkedin</a>、<a href="https://twitter.com/ayame_q">Twitter</a>
 					などでご連絡ください！
 				</p>
 			</div>
