@@ -2,7 +2,7 @@
 	<section id="about-me">
 		<h2>About Me</h2>
 		<div class="content">
-			<p>東洋大学情報連携学部(INIAD) 3年</p>
+			<p>東洋大学情報連携学部(INIAD) 4年</p>
 			<p class="key">
 				UI/UX Designer
 			</p>
