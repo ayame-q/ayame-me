@@ -10,6 +10,8 @@ html {
 	-webkit-font-smoothing: antialiased;
 	box-sizing: border-box;
 	font-size: max(16px, 1.5vw);
+	width: 100%;
+	overflow-x: hidden;
 }
 
 html,
