@@ -6,7 +6,7 @@
 			<about-me />
 			<skills-list />
 			<works-list v-bind:works="works" v-bind:scroll-y="scrollY" v-bind:window-width="windowWidth" v-bind:window-height="windowHeight" />
-			<awards-list />
+			<awards-list v-bind:scroll-y="scrollY" v-bind:window-width="windowWidth" v-bind:window-height="windowHeight" />
 			<contacts />
 		</main>
 		<scroll-top />

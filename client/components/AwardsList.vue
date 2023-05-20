@@ -1,65 +1,151 @@
 <template>
-	<section id="awards">
+	<section id="awards" ref="awards">
 		<h2>Awards & Experiences</h2>
 		<ul>
-			<li>
-				<time>2021.7</time>
-				<span class="text">
-					<span>東京商工会議所</span>
-					<span>カラーコーディネーター検定</span>
-					<span>スタンダードクラス 合格</span>
+			<li v-for="n of 1" v-bind:key="n" class="wheel" />
+			<li v-for="(award, index) of awards" v-bind:key="index" class="wheel">
+				<!--TODO: keyをuuidに変更 -->
+				<time>{{ award.time }}</time>
+				<span class="title">
+					{{ award.title }}
 				</span>
 			</li>
-			<li>
-				<time>2020.5</time>
-				<span class="text">
-					<span>2019年度東洋大学情報連携学部</span>
-					<span>プログラミング技術優秀者</span>
-					<span>受賞</span>
-				</span>
-			</li>
-			<li>
-				<time>2020.2〜</time>
-				<span class="text">
-					<span>INIAD公認サークル</span>
-					<span>Webメディア研究会</span>
-					<span>代表</span>
-				</span>
-			</li>
-			<li>
-				<span class="time">
-					<span class="period">
-						<time class="start">2020.2〜</time>
-						<time class="end">2021.2</time>
-					</span>
-					<span><img src="@/assets/img/arrow-pink.svg" alt="→"></span>
-					<time>2021.2〜</time>
-				</span>
-				<span class="text">
-					<span>INIAD-FES(大学祭)実行委員会</span>
-					<span class="period">
-						<span>広報部長</span>
-						<span><img src="@/assets/img/arrow-white.svg" alt="→"></span>
-						<span>副委員長</span>
-					</span>
-				</span>
-			</li>
-			<li>
-				<time>2016.10〜</time>
-				<span class="text">
-					<span>経済産業省</span>
-					<span>基本情報技術者試験</span>
-					<span>合格</span>
-				</span>
-			</li>
+			<li v-for="n of 12" v-bind:key="n" class="wheel" />
 		</ul>
-		<div class="ferriswheel-pillar" />
+		<div class="ferriswheel-pillar-base" />
+		<div ref="pillarCircle" class="ferriswheel-pillar-circle" />
 	</section>
 </template>
 
 <script>
 export default {
 	name: "AwardsList",
+	props: {
+		scrollY: Number,
+		windowWidth: Number,
+		windowHeight: Number,
+	},
+	data () {
+		return {
+			isAwardsActive: false,
+			awards: [
+				{
+					time: "2023.3",
+					title: "東洋大学情報連携学部\n(UI/UXデザイン専攻)\n卒業",
+				},
+				{
+					time: "2020.2〜2023.1",
+					title: "INIAD公認サークル\nWebメディア研究会\n代表",
+				},
+				{
+					time: "2022.4〜2023.3",
+					title: "椋計人研究室\n(UI/UXデザイン)\n所属",
+				},
+				{
+					time: "2022.11",
+					title: "画像情報教育振興協会\nWebデザイナー検定\nエキスパート 合格",
+				},
+				{
+					time: "2021.2〜2022.1",
+					title: "INIAD-FES(大学祭)\n実行委員会\n副委員長",
+				},
+				{
+					time: "2021.10",
+					title: "経済産業省\n応用情報技術者検定\n合格",
+				},
+				{
+					time: "2021.7",
+					title: "東京商工会議所\nカラーコーディネーター検定\nスタンダードクラス 合格",
+				},
+				{
+					time: "2020.2〜2021.2",
+					title: "INIAD-FES(大学祭)\n実行委員会\n広報部長",
+				},
+				{
+					time: "2020.5",
+					title: "2019年度東洋大学情報連携学部\nプログラミング技術優秀者\n受賞",
+				},
+				{
+					time: "2019.4",
+					title: "東洋大学情報連携学部\n(INIAD)\n入学",
+				},
+				{
+					time: "2016.10",
+					title: "経済産業省\n基本情報技術者試験\n合格",
+				},
+			],
+		}
+	},
+	watch: {
+		scrollY () {
+			if (this.isAwardsActive) {
+				this.updateWheel()
+			}
+		},
+		windowWidth () {
+			this.updateWheel()
+		},
+		windowHeight () {
+			this.updateWheel()
+		},
+	},
+	mounted () {
+		const options = {
+			root: null,
+			rootMargin: "90% 0% -90% 0%",
+			threshold: 0,
+		}
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				this.isAwardsActive = entry.isIntersecting
+			})
+		}, options)
+		observer.observe(this.$refs.awards)
+		const wheels = this.$refs.awards.getElementsByClassName("wheel")
+		Array.prototype.forEach.call(wheels, (wheel, index) => {
+			const scrollPos = 0
+			const { position, isActive } = this.getWheelPosition(scrollPos, index)
+			wheel.style.top = position.y + "px"
+			wheel.style.left = position.x + "px"
+			wheel.style.display = ((isActive) ? "block" : "none")
+		})
+	},
+	methods: {
+		updateWheel () {
+			const wheels = this.$refs.awards.getElementsByClassName("wheel")
+			const scrollPos = Math.floor((-this.$refs.awards.getBoundingClientRect().y >= 0) ? -this.$refs.awards.getBoundingClientRect().y : 0)
+			Array.prototype.forEach.call(wheels, (wheel, index) => {
+				const { position, isActive } = this.getWheelPosition(scrollPos, index)
+				wheel.style.top = position.y + "px"
+				wheel.style.left = position.x + "px"
+				wheel.style.display = ((isActive) ? "block" : "none")
+			})
+			const pillarCircle = this.$refs.pillarCircle
+			pillarCircle.style.rotate = this.getWheelDeg(scrollPos) + "deg"
+		},
+		getWheelPosition (count, wheelNum) {
+			const longRadius = this.windowWidth * 1.02 / 2
+			const shortRadius = this.windowWidth * 0.95 / 2
+
+			// スクロール位置 * 角速度 + 45°(円の8等分) * ホイール番号 - 90°(初期値を円の下にする)
+			const speed = 0.005
+			const radian = count * speed + 2 * Math.PI / 8 * -wheelNum + Math.PI / 2 * 3
+
+			// 座標
+			const position = {
+				x: Math.floor(longRadius * Math.cos(radian)) + this.windowWidth / 100 * 68,
+				y: Math.floor(shortRadius * Math.sin(radian)) + shortRadius + this.windowWidth / 100 * 6,
+			}
+
+			const isActive = -3 / 2 * Math.PI + 2 / 8 * Math.PI * wheelNum <= count * speed && count * speed < 1 / 2 * Math.PI + 2 / 8 * Math.PI * wheelNum
+			return { position, isActive }
+		},
+		getWheelDeg (count) {
+			const speed = 0.005
+			const radian = count * speed
+			return (radian * 360 / (2 * Math.PI))
+		},
+	},
 }
 </script>
 
@@ -81,38 +167,13 @@ export default {
 			background-size: 100%;
 			background-repeat: no-repeat;
 			z-index: 2;
+			transform: translateY(-10%);
 
 			img {
 				width: 1em;
 			}
 
-			&:nth-child(1) {
-				top: 3vw;
-				left: 67vw;
-			}
-
-			&:nth-child(2) {
-				top: 20vw;
-				left: 30vw;
-			}
-
-			&:nth-child(3) {
-				top: 53vw;
-				left: 17vw;
-			}
-
-			&:nth-child(4) {
-				top: 86vw;
-				left: 33vw;
-			}
-
-			&:nth-child(5) {
-				top: 98vw;
-				left: 67vw;
-			}
-
-			> time,
-			> span.period {
+			time {
 				position: absolute;
 				width: fit-content;
 				display: block;
@@ -123,118 +184,45 @@ export default {
 				color: #c37394;
 			}
 
-			span.time {
-				position: absolute;
-				display: block;
-				left: 48%;
-				transform: translateX(-50%);
-				bottom: 55%;
-				font-size: 1.3vw;
-				color: #c37394;
-				width: 90%;
-
-				>time,
-				>span {
-					&:nth-child(1) {
-						position: absolute;
-						right: 78%;
-						bottom: 0;
-						transform: translateX(-50%);
-					}
-
-					&:nth-child(2) {
-						position: absolute;
-						left: 50%;
-						bottom: 0.1vw;
-						transform: translateX(-50%);
-					}
-
-					&:nth-child(3) {
-						position: absolute;
-						left: 70%;
-						bottom: 0;
-						transform: translateX(-50%);
-					}
-				}
-
-				time {
-					position: absolute;
-					display: block;
-					bottom: 0;
-
-					&.start {
-						bottom: 1.1em;
-						left: -0.8em;
-					}
-				}
-			}
-
-			span.text {
+			span.title {
 				color: #fff;
-				white-space: nowrap;
-
-				> span {
-					position: absolute;
-					width: fit-content;
-					display: block;
-					font-size: 1.3vw;
-
-					&:nth-child(1) {
-						left: 10%;
-						bottom: 28%;
-					}
-
-					&:nth-child(2) {
-						left: 48%;
-						transform: translateX(-50%);
-						bottom: 17%;
-					}
-
-					&:nth-child(3) {
-						right: 22%;
-						bottom: 6%;
-					}
-
-					&.period {
-						left: 48%;
-						transform: translateX(-50%);
-						width: 90%;
-
-						span {
-							position: absolute;
-							display: block;
-							width: fit-content;
-
-							&:nth-child(1) {
-								right: 68%;
-								transform: translateX(50%);
-							}
-
-							&:nth-child(2) {
-								left: 50%;
-								transform: translateX(-50%);
-							}
-
-							&:nth-child(3) {
-								left: 68%;
-								transform: translateX(-50%);
-							}
-						}
-					}
-				}
+				white-space: pre-line;
+				position: absolute;
+				width: 80%;
+				display: block;
+				font-size: 1.3vw;
+				text-align: center;
+				left: 48%;
+				bottom: 5%;
+				transform: translateX(-50%);
+				line-height: 2.2;
 			}
 		}
 	}
 
-	.ferriswheel-pillar {
+	.ferriswheel-pillar-base {
 		position: absolute;
-		background-image: url("assets/img/ferriswheel-pillar.svg");
-		background-size: 100vw 100%;
+		background-image: url("assets/img/ferriswheel-pillar-base.svg");
+		background-size: 100% 65%;
 		background-repeat: no-repeat;
+		background-position: left bottom;
 		width: 70vw;
 		height: calc(100vw / 1231.4572 * 1776.1758);
+		left: 45.3vw;
+		top: 5rem;
+	}
+
+	.ferriswheel-pillar-circle {
+		position: absolute;
+		background-image: url("assets/img/ferriswheel-pillar-circle.svg");
+		background-size: 100%;
+		background-repeat: no-repeat;
+		background-position: left top;
+		width: 100vw;
+		height: 100vw;
 		left: 30vw;
 		top: 5rem;
+		rotate: 0deg;
 	}
 }
 </style>
