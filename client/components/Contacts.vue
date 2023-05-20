@@ -3,7 +3,7 @@
 		<h2>Contacts</h2>
 		<ul>
 			<li class="balloon">
-				<a href="mailto:s1f101900879@toyo.jp"><img src="@/assets/img/balloon-mail.svg" alt="Email"></a>
+				<a href="mailto:tatema2@ayame.me"><img src="@/assets/img/balloon-mail.svg" alt="Email"></a>
 			</li>
 			<li class="balloon">
 				<a href="https://twitter.com/ayame_q" target="_blank"><img src="@/assets/img/balloon-twitter.svg" alt="Twitter"></a>
@@ -17,7 +17,7 @@
 				<p>
 					最後までご覧いただきありがとうございます。<br>
 					もし興味を持っていただきましたら、ぜひお気軽に<br>
-					<a href="mailto:s1f101900879@toyo.jp">メール</a>、<a href="https://www.linkedin.com/in/ayame-tatematsu" target="_blank">Linkedin</a>、<a href="https://twitter.com/ayame_q">Twitter</a>
+					<a href="mailto:tatema2@ayame.me">メール</a>、<a href="https://www.linkedin.com/in/ayame-tatematsu" target="_blank">Linkedin</a>、<a href="https://twitter.com/ayame_q">Twitter</a>
 					などでご連絡ください！
 				</p>
 			</div>
