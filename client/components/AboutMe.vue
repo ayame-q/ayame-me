@@ -2,7 +2,6 @@
 	<section id="about-me">
 		<h2>About Me</h2>
 		<div class="content">
-			<p>東洋大学情報連携学部(INIAD) 4年</p>
 			<p class="key">
 				UI/UX Designer
 			</p>
@@ -37,7 +36,7 @@ export default {
 <style lang="scss" scoped>
 #about-me {
 	.content {
-		margin: 0 10vw;
+		margin: 1.5rem 10vw;
 		margin-bottom: 3rem;
 		line-height: 2.2em;
 
@@ -47,7 +46,6 @@ export default {
 			&.key {
 				font-family: "ぺんぱる", Penpal, sans-serif;
 				font-weight: bold;
-				margin-top: -1em;
 			}
 
 			&.name {
