@@ -154,6 +154,7 @@ export default {
 	position: relative;
 	width: 100%;
 	height: calc(100vw / 1231.4572 * 1776.1758 - 15vw);
+	overflow-x: clip;
 
 	ul {
 		list-style: none;
