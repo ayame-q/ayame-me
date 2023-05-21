@@ -14,7 +14,7 @@
 			〜
 		</div>
 		<footer>
-			<p><small>&copy; 2021 Ayame Tatematsu</small></p>
+			<p><small>&copy; 2021 - 2023 Ayame Tatematsu</small></p>
 		</footer>
 	</div>
 </template>
