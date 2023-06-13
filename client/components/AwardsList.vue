@@ -30,6 +30,10 @@ export default {
 			isAwardsActive: false,
 			awards: [
 				{
+					time: "2023.4〜",
+					title: "日鉄ソリューションズ株式会社\nBeyond Experience Design Center\n所属",
+				},
+				{
 					time: "2023.3",
 					title: "東洋大学情報連携学部\n(UI/UXデザイン専攻)\n卒業",
 				},
