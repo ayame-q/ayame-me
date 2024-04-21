@@ -25,7 +25,7 @@ export default {
 	name: "Default",
 	computed: {
 		isModal () {
-			return this.$route.path.startsWith("/works/") || this.$route.path.startsWith("/skills/")
+			return this.$route.path.startsWith("/works/") || this.$route.path.startsWith("/skills/") || this.$route.path.startsWith("/awards/")
 		},
 		isIndex () {
 			return this.$route.name === "index"
