@@ -1,16 +1,18 @@
 <template>
-	<div class="config-wrap">
-		<form class="config" v-on:submit.prevent="onSubmit">
-			<p class="slug-input">
-				{{ rootPath }}<input v-model="obj.slug" type="text" placeholder="スラグ">
-			</p>
-			<SelectThumbnail v-if="hasThumbnail" v-model="obj" />
-			<p class="submit-input">
-				<input type="submit" value="保存">
-			</p>
-		</form>
-		<div class="overlay" v-on:click="onClose" />
-	</div>
+	<portal to="portal-modal">
+		<div class="config-wrap">
+			<form class="config" v-on:submit.prevent="onSubmit">
+				<p class="slug-input">
+					{{ rootPath }}<input v-model="obj.slug" type="text" placeholder="スラグ">
+				</p>
+				<SelectThumbnail v-if="hasThumbnail" v-model="obj" />
+				<p class="submit-input">
+					<input type="submit" value="保存">
+				</p>
+			</form>
+			<div class="overlay" v-on:click="onClose" />
+		</div>
+	</portal>
 </template>
 
 <script>

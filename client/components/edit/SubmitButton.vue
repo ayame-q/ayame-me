@@ -1,10 +1,10 @@
 <template>
-	<div>
-		<button class="save" v-on:click="onClickSubmitButton">
-			<img src="@/assets/img/save.svg" alt="保存">
-		</button>
+	<div v-bind:class="{blank: !value}">
 		<button class="config" v-on:click="isSlugModalOpen = true">
 			<img src="@/assets/img/config.svg" alt="設定">
+		</button>
+		<button class="save" v-on:click="onClickSubmitButton">
+			<img src="@/assets/img/save.svg" alt="保存">
 		</button>
 		<ConfigModal
 			v-if="isSlugModalOpen"
@@ -80,11 +80,13 @@ export default {
 			if (this.obj.uuid) {
 				this.$http.$put(`/api/${this.apiType}/${this.obj.slug}`, this.obj)
 					.then(() => {
+						this.onCloseSlugModal()
 						this.$router.push("/")
 					})
 			} else {
 				this.$http.$post(`/api/${this.apiType}/${this.obj.slug}`, this.obj)
 					.then(() => {
+						this.onCloseSlugModal()
 						this.$router.push("/")
 					})
 			}
@@ -97,27 +99,15 @@ export default {
 
 .save,
 .config {
-	z-index: 1003;
-	display: block;
-	position: fixed;
 	background: none;
 	border: none;
+	cursor: pointer;
 	width: 1.6rem;
 	height: 1.6rem;
-	top: 4vh;
-	right: 9vw;
-	cursor: pointer;
+	margin: 0 0.6vw;
 
 	img {
 		width: 100%;
-	}
-
-	&.save {
-		right: 12.5vw;
-	}
-
-	&.config {
-		right: 16vw;
 	}
 }
 </style>

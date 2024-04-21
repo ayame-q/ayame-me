@@ -36,7 +36,7 @@
 					</nuxt-link>
 				</div>
 			</div>
-			<SubmitButton v-if="isEditable" v-model="skill" api-type="skills" root-path="/skills/" />
+			<SubmitButton v-if="isEditable" v-model="skill" class="submit-wrap" api-type="skills" root-path="/skills/" />
 		</article>
 	</main>
 </template>
@@ -229,6 +229,12 @@ main {
 					}
 				}
 			}
+		}
+
+		.submit-wrap {
+			position: fixed;
+			top: 4vh;
+			right: 12.5vw;
 		}
 	}
 }

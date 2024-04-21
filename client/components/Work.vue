@@ -79,7 +79,14 @@
 				<Description v-model="work.description" class="description-wrap" v-bind:is-editable="isEditable" />
 			</div>
 			<WorkResourceFullScreen ref="fullscreen" v-bind:resources="work.resources" />
-			<SubmitButton v-if="isEditable" v-model="work" api-type="works" root-path="/works/" v-bind:has-thumbnail="true" />
+			<SubmitButton
+				v-if="isEditable"
+				v-model="work"
+				class="submit-wrap"
+				api-type="works"
+				root-path="/works/"
+				v-bind:has-thumbnail="true"
+			/>
 		</article>
 	</main>
 </template>
@@ -338,6 +345,12 @@ main {
 				height: fit-content;
 				font-size: max(0.65rem, 14px);
 			}
+		}
+
+		.submit-wrap {
+			position: fixed;
+			top: 4vh;
+			right: 12.5vw;
 		}
 	}
 }
