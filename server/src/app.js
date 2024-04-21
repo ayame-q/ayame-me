@@ -23,6 +23,7 @@ const port = process.env.PORT
 
 let worksMaxOrder = 0;
 let skillsMaxOrder = 0;
+let awardsMaxOrder = 0;
 
 const initialize = async () => {
 	const workFileNames = await fs.readdir(`${contentPath}/works/`)
@@ -137,6 +138,29 @@ const onContentSkillsRequest = (req, res, next) => {
 		})
 }
 
+
+const onContentAwardsRequest = (req, res, next) => {
+	const filePath = `${contentPath}/awards/${req.params.slug}.json`
+	console.log(`[${req.method}: ${req.path}]`, filePath)
+	const content = req.body
+	let orderAdded = false
+	if (!content.order) {
+		content.order = awardsMaxOrder + 1
+		orderAdded = true
+	}
+	save(filePath, content, req.method)
+		.then(content => {
+			res.json(content)
+			if (orderAdded) {
+				awardsMaxOrder++
+			}
+		})
+		.catch(err => {
+			next(err)
+		})
+}
+
+
 app.post("/works/:slug", onContentWorksRequest)
 
 app.put("/works/:slug", onContentWorksRequest)
@@ -149,6 +173,12 @@ app.put("/skills/:slug", onContentSkillsRequest)
 
 app.patch("/skills/:slug", onContentSkillsRequest)
 
+app.post("/awards/:slug", onContentAwardsRequest)
+
+app.put("/awards/:slug", onContentAwardsRequest)
+
+app.patch("/awards/:slug", onContentAwardsRequest)
+
 app.post("/image/", upload.single("file"), (req, res) => {
 	const filePath = req.file.path
 	console.log(`[${req.method}: ${req.path}]`, filePath)
@@ -158,10 +188,9 @@ app.post("/image/", upload.single("file"), (req, res) => {
 	})
 })
 
-process.on("SIGTERM", async () => {
+const cleanup = async () => {
 	const images = []
 
-	console.log("Process is terminating...")
 	const workFileNames = await fs.readdir(`${contentPath}/works/`)
 	for (const fileName of workFileNames) {
 		if (fileName.match(/\.json$/)) {
@@ -192,8 +221,14 @@ process.on("SIGTERM", async () => {
 			console.log("Deleted:", filePath)
 		}
 	}
+}
+
+process.on("SIGTERM", async () => {
+	console.log("Process is terminating...")
+	await cleanup()
 	console.log("Clean up is finished. Bye.")
 	process.exit(0)
 })
 
 initialize()
+cleanup()

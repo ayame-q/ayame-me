@@ -1,19 +1,33 @@
 <template>
-	<section id="awards" ref="awards">
-		<h2>Awards & Experiences</h2>
-		<ul>
-			<li v-for="n of 1" v-bind:key="n" class="wheel" />
-			<li v-for="(award, index) of awards" v-bind:key="index" class="wheel">
-				<!--TODO: keyをuuidに変更 -->
-				<time>{{ award.time }}</time>
-				<span class="title">
-					{{ award.title }}
-				</span>
-			</li>
-			<li v-for="n of 12" v-bind:key="n" class="wheel" />
-		</ul>
-		<div class="ferriswheel-pillar-base" />
-		<div ref="pillarCircle" class="ferriswheel-pillar-circle" />
+	<section id="awards" ref="awards" v-bind:style="{height: `${15 * awards.length + 200}vh`}">
+		<div class="meta">
+			<h2>Awards & Experiences</h2>
+			<ul class="options" v-bind:class="{active: isAwardsActive}">
+				<li v-if="isEditable">
+					<nuxt-link to="/awards/order">
+						<img src="@/assets/img/order-gold.svg" alt="並び替え">
+					</nuxt-link>
+				</li>
+			</ul>
+		</div>
+		<div class="awards-list">
+			<div class="wheel">
+				<div v-if="isEditable" class="add" v-on:click="add">
+					<p>
+						<img src="@/assets/img/add-white.svg" alt="+">
+					</p>
+				</div>
+			</div>
+			<AwardsListAward
+				v-for="(award, index) of awards"
+				v-bind:key="award.uuid"
+				v-model="awards[index]"
+				class="wheel"
+			/>
+			<div v-for="n of 14" v-bind:key="n" class="wheel" />
+			<div class="ferriswheel-pillar-base" />
+			<div ref="pillarCircle" class="ferriswheel-pillar-circle" />
+		</div>
 	</section>
 </template>
 
@@ -28,57 +42,15 @@ export default {
 	data () {
 		return {
 			isAwardsActive: false,
-			awards: [
-				{
-					time: "2023.4〜",
-					title: "日鉄ソリューションズ株式会社\nBeyond Experience Design Center\n所属",
-				},
-				{
-					time: "2023.3",
-					title: "東洋大学情報連携学部\n(UI/UXデザイン専攻)\n卒業",
-				},
-				{
-					time: "2022.4〜2023.3",
-					title: "椋計人研究室\n(UI/UXデザイン)\n所属",
-				},
-				{
-					time: "2020.2〜2023.1",
-					title: "INIAD公認サークル\nWebメディア研究会\n代表",
-				},
-				{
-					time: "2022.11",
-					title: "画像情報教育振興協会\nWebデザイナー検定\nエキスパート 合格",
-				},
-				{
-					time: "2021.2〜2022.1",
-					title: "INIAD-FES(大学祭)\n実行委員会\n副委員長",
-				},
-				{
-					time: "2021.10",
-					title: "経済産業省\n応用情報技術者検定\n合格",
-				},
-				{
-					time: "2021.7",
-					title: "東京商工会議所\nカラーコーディネーター検定\nスタンダードクラス 合格",
-				},
-				{
-					time: "2020.2〜2021.2",
-					title: "INIAD-FES(大学祭)\n実行委員会\n広報部長",
-				},
-				{
-					time: "2020.5",
-					title: "2019年度東洋大学情報連携学部\nプログラミング技術優秀者\n受賞",
-				},
-				{
-					time: "2019.4",
-					title: "東洋大学情報連携学部\n(INIAD)\n入学",
-				},
-				{
-					time: "2016.10",
-					title: "経済産業省\n基本情報技術者試験\n合格",
-				},
-			],
 		}
+	},
+	computed: {
+		isEditable () {
+			return this.$store.getters["status/getIsEditable"]
+		},
+		awards () {
+			return this.$store.getters.getAwards
+		},
 	},
 	watch: {
 		scrollY () {
@@ -91,6 +63,12 @@ export default {
 		},
 		windowHeight () {
 			this.updateWheel()
+		},
+		awards: {
+			handler (newValue) {
+				this.updateWheel()
+			},
+			deep: true,
 		},
 	},
 	mounted () {
@@ -149,6 +127,16 @@ export default {
 			const radian = count * speed
 			return (radian * 360 / (2 * Math.PI))
 		},
+		add () {
+			this.awards.unshift({
+				isEditing: true,
+				time: "",
+				title: "",
+			})
+			this.$nextTick(() => {
+				this.updateWheel()
+			})
+		},
 	},
 }
 </script>
@@ -160,11 +148,55 @@ export default {
 	height: calc(100vw / 1231.4572 * 1776.1758 - 15vw);
 	overflow-x: clip;
 
-	ul {
-		list-style: none;
-		padding: 0;
+	.meta {
+		display: flex;
+		width: 60vw;
+		height: 5rem;
+		justify-content: space-between;
+		align-items: center;
 
-		li {
+		ul.options {
+			list-style: none;
+			display: flex;
+			visibility: hidden;
+			opacity: 0;
+			transition: 0.2s;
+
+			&.active {
+				visibility: visible;
+				opacity: 1;
+				transition: 0.5s;
+			}
+
+			li {
+				cursor: pointer;
+				margin: 0 1rem;
+
+				&:last-child {
+					margin-right: 0;
+				}
+
+				img {
+					display: block;
+					width: 1rem;
+				}
+			}
+		}
+	}
+
+	.awards-list {
+		position: sticky;
+		top: -50vh;
+
+		@media (max-aspect-ratio: 1.2/1) {
+			top: 0;
+		}
+
+		left: 0;
+		width: 100%;
+		height: calc(100vw / 1231.4572 * 1776.1758 - 15vw);
+
+		.wheel {
 			position: absolute;
 			width: 25vw;
 			height: calc(25vw / 342.623 * 344.7631);
@@ -174,33 +206,23 @@ export default {
 			z-index: 2;
 			transform: translateY(-10%);
 
-			img {
-				width: 1em;
-			}
+			.add {
+				width: 100%;
+				height: 100%;
+				cursor: pointer;
 
-			time {
-				position: absolute;
-				width: fit-content;
-				display: block;
-				font-size: 1.3vw;
-				left: 48%;
-				transform: translateX(-50%);
-				bottom: 55%;
-				color: #c37394;
-			}
+				p {
+					position: absolute;
+					width: 1.5vw;
+					display: block;
+					left: 48%;
+					transform: translateX(-50%);
+					bottom: 20%;
 
-			span.title {
-				color: #fff;
-				white-space: pre-line;
-				position: absolute;
-				width: 80%;
-				display: block;
-				font-size: 1.3vw;
-				text-align: center;
-				left: 48%;
-				bottom: 5%;
-				transform: translateX(-50%);
-				line-height: 2.2;
+					img {
+						width: 100%;
+					}
+				}
 			}
 		}
 	}
