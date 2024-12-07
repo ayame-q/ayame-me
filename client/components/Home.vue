@@ -16,10 +16,12 @@
 		<footer>
 			<p><small>&copy; 2021 - 2023 Ayame Tatematsu</small></p>
 		</footer>
+		<font-char-set v-bind:works="works" />
 	</div>
 </template>
 
 <script>
+
 export default {
 	scrollToTop: false,
 	data () {
