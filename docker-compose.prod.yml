@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile.prod
     env_file:
       - ".env"
+    volumes:
+      - "./nginx/nginx.prod.conf:/etc/nginx/templates/default.conf.template"
     ports:
       - "$PORT:80"
     restart: always
