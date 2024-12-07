@@ -2,8 +2,4 @@
 
 yarn install;
 
-if "$DEBUG"; then
-  exec yarn run dev
-else
-  exec "$@"
-fi
+exec "$@"

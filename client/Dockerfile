@@ -17,5 +17,4 @@ ENV HOST 0.0.0.0
 EXPOSE 3000
 
 ENTRYPOINT [ "entrypoint.sh" ]
-# DEBUG=falseの場合の実行コマンド
-CMD npm run generate
+CMD yarn run dev
