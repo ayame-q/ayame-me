@@ -4,3 +4,8 @@ services:
     build:
       context: client
       dockerfile: Dockerfile.prod
+    env_file:
+      - ".env"
+    ports:
+      - "$PORT:80"
+    restart: always
