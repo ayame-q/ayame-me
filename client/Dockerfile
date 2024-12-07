@@ -2,7 +2,7 @@ FROM node:16.14-alpine
 
 COPY ./package.json /usr/src/app/
 WORKDIR /usr/src/app
-RUN npm install -g npm && npm install
+RUN yarn install
 
 COPY . /usr/src/app
 COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
