@@ -1,4 +1,4 @@
 #!/bin/sh
 
-npm install -g npm && npm install;
+yarn install;
 exec "$@"

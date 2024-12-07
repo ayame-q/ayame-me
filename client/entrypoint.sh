@@ -1,9 +1,9 @@
 #!/bin/sh
 
-npm install -g npm && npm install;
+yarn install;
 
 if "$DEBUG"; then
-  exec npm run dev
+  exec yarn run dev
 else
   exec "$@"
 fi
