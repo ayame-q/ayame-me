@@ -1,6 +1,7 @@
-FROM node:18.12-alpine
+FROM node:16.14-alpine
 
 COPY ./package.json /usr/src/app/
+COPY ./yarn.lock /usr/src/app/
 WORKDIR /usr/src/app
 RUN yarn install
 
