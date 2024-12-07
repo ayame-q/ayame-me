@@ -173,6 +173,7 @@ export default {
 			visibility: hidden;
 			opacity: 0;
 			transition: 0.2s;
+			padding-top: 1.5rem;
 
 			&.active {
 				visibility: visible;

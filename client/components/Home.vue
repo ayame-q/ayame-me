@@ -92,6 +92,7 @@ export default {
 h2,
 ::v-deep h2 {
 	margin-left: 5vw;
+	padding-top: 2rem;
 	font-size: 1.8rem;
 
 	img {

@@ -36,7 +36,7 @@ export default {
 <style lang="scss" scoped>
 #about-me {
 	.content {
-		margin: 1.5rem 10vw;
+		margin: 1.5rem calc(5vw + 0.1rem);
 		margin-bottom: 3rem;
 		line-height: 2.2em;
 
