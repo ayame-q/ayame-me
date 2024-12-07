@@ -22,3 +22,4 @@ CMD npm run generate
 FROM nginx:alpine
 
 COPY --from=0 /usr/src/app/dist /usr/src/app/client
+COPY ../nginx/nginx.prod.conf /etc/nginx/templates/default.conf.template
