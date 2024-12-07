@@ -6,17 +6,13 @@ WORKDIR /usr/src/app
 RUN yarn install
 
 COPY . /usr/src/app
-COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod 755 /usr/local/bin/entrypoint.sh
 
 RUN cp -rf /usr/src/app/node_modules/pdfjs-dist/cmaps /usr/src/app/static/
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
 
-ENTRYPOINT [ "entrypoint.sh" ]
-# DEBUG=falseの場合の実行コマンド
-CMD npm run generate
+RUN yarn run generate
 
 ## nginx
 FROM nginx:alpine
