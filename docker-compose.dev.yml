@@ -2,8 +2,12 @@ version: "3"
 services:
   nuxtjs:
     volumes:
+      - "./client:/usr/src/app"
       - "./client/content:/usr/src/app/content"
       - "./client/static/img/content:/usr/src/app/static/img/content"
+      # ホストから切り離す
+      - "/usr/src/app/node_modules"
+      - "/usr/src/app/static/cmaps"
   expressjs:
     build: server
     env_file:
@@ -18,5 +22,13 @@ services:
       - "IMAGE_PATH=./img"
       - "IMAGE_URL=/img/content/"
   nginx:
+    image: nginx:alpine
+    env_file:
+      - ".env"
+    volumes:
+      - "./nginx/nginx.conf:/etc/nginx/templates/default.conf.template"
     links:
-      - expressjs
+      - "nuxtjs"
+      - "expressjs"
+    ports:
+      - "$PORT:80"
