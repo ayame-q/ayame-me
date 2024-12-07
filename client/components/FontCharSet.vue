@@ -17,6 +17,7 @@ export default {
 
 		const works = this.$store.getters.getWorks
 		const skills = this.$store.getters.getSkills
+		const awards = this.$store.getters.getAwards
 		works.forEach((work) => {
 			for (const workKey in work) {
 				if (typeof work[workKey] === "string") {
@@ -33,6 +34,18 @@ export default {
 			for (const skillKey in skill) {
 				if (typeof skill[skillKey] === "string") {
 					skill[skillKey].split("").forEach((char) => {
+						if (!charSet.has(char)) {
+							charSet.add(char)
+							this.charsString += char
+						}
+					})
+				}
+			}
+		})
+		awards.forEach((award) => {
+			for (const awardKey in award) {
+				if (typeof award[awardKey] === "string") {
+					award[awardKey].split("").forEach((char) => {
 						if (!charSet.has(char)) {
 							charSet.add(char)
 							this.charsString += char
