@@ -2,7 +2,7 @@
 	<section id="works" ref="works" v-bind:style="{height: `${15 * works.length + 100}vh`}">
 		<div class="content" v-bind:class="{active: isWorksActive}">
 			<div class="meta">
-				<h2>Works</h2>
+				<h2><img src="@/assets/img/title-works.svg" alt="Works"></h2>
 				<ul class="options" v-bind:class="{active: isWorksActive}">
 					<li v-if="isEditable">
 						<nuxt-link to="/works/order">

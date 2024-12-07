@@ -1,6 +1,6 @@
 <template>
 	<section id="about-me">
-		<h2>About Me</h2>
+		<h2><img src="@/assets/img/title-about-me.svg" alt="About Me"></h2>
 		<div class="content">
 			<p class="key">
 				UI/UX Designer

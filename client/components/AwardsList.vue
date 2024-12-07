@@ -1,7 +1,7 @@
 <template>
 	<section id="awards" ref="awards" v-bind:style="{height: `${15 * awards.length + 200}vh`}">
 		<div class="meta">
-			<h2>Awards & Experiences</h2>
+			<h2><img src="@/assets/img/title-awards-experiences.svg" alt="Awards & Experiences"></h2>
 			<ul class="options" v-bind:class="{active: isAwardsActive}">
 				<li v-if="isEditable">
 					<nuxt-link to="/awards/order">

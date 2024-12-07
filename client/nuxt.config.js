@@ -28,7 +28,7 @@ export default {
 			{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
 		],
 		script: [
-			{ src: "//typesquare.com/3/tsst/script/ja/typesquare.js?60aa9f6540dc426583e049c2e90393a3&onload=false", charSet: "utf-8" },
+			{ src: "//typesquare.com/3/tsst/script/ja/typesquare.js?60aa9f657b0c4f27bf3549c2e90393a3&onload=false", charSet: "utf-8" },
 		],
 	},
 

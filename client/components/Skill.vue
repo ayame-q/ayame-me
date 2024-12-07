@@ -99,8 +99,13 @@ export default {
 			}
 		},
 		loadWebFont () {
-			/* global Ts */
-			Ts.loadFont()
+			try {
+				/* global Ts */
+				Ts.loadFont()
+			} catch (e) {
+				// eslint-disable-next-line no-console
+				console.error(e)
+			}
 		},
 	},
 }

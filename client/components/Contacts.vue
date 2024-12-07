@@ -1,6 +1,6 @@
 <template>
 	<section id="contacts">
-		<h2>Contacts</h2>
+		<h2><img src="@/assets/img/title-contacts.svg" alt="Contacts"></h2>
 		<ul>
 			<li class="balloon">
 				<a href="mailto:tatema2@ayame.me"><img src="@/assets/img/balloon-mail.svg" alt="Email"></a>

@@ -1,7 +1,7 @@
 <template>
 	<section id="skills">
 		<div class="title-wrap">
-			<h2>Skills</h2>
+			<h2><img src="@/assets/img/title-skills.svg" alt="Skills"></h2>
 		</div>
 		<ul>
 			<li style="top: calc(2.5vw + 39vw); left: 7vw; width: 18.5vw;">

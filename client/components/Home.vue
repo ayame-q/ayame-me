@@ -47,8 +47,13 @@ export default {
 	},
 	methods: {
 		loadWebFont () {
-			/* global Ts */
-			Ts.loadFont()
+			try {
+				/* global Ts */
+				Ts.loadFont()
+			} catch (e) {
+				// eslint-disable-next-line no-console
+				console.error(e)
+			}
 		},
 		onScroll (event) {
 			this.scrollY = window.scrollY
@@ -87,14 +92,8 @@ h2,
 	margin-left: 5vw;
 	font-size: 1.8rem;
 
-	&::before {
-		content: "〜";
-		margin-right: 0.1em;
-	}
-
-	&::after {
-		content: "〜";
-		margin-left: 0.1em;
+	img {
+		height: 3rem;
 	}
 }
 
