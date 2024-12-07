@@ -9,38 +9,33 @@ export default {
 	name: "FontCharSet",
 	data () {
 		return {
-			charSet: new Set(),
 			charsString: "",
 		}
 	},
-	computed: {
-		works () {
-			return this.$store.getters.getWorks
-		},
-		skills () {
-			return this.$store.getters.getSkills
-		},
-	},
-	mounted () {
-		this.works.forEach((work) => {
+	created () {
+		const charSet = new Set()
+
+		const works = this.$store.getters.getWorks
+		const skills = this.$store.getters.getSkills
+		works.forEach((work) => {
 			for (const workKey in work) {
 				if (typeof work[workKey] === "string") {
 					work[workKey].split("").forEach((char) => {
-						if (!this.charSet.has(char)) {
+						if (!charSet.has(char)) {
+							charSet.add(char)
 							this.charsString += char
-							this.charSet.add(char)
 						}
 					})
 				}
 			}
 		})
-		this.skills.forEach((skill) => {
+		skills.forEach((skill) => {
 			for (const skillKey in skill) {
 				if (typeof skill[skillKey] === "string") {
 					skill[skillKey].split("").forEach((char) => {
-						if (!this.charSet.has(char)) {
+						if (!charSet.has(char)) {
+							charSet.add(char)
 							this.charsString += char
-							this.charSet.add(char)
 						}
 					})
 				}
