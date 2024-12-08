@@ -9,7 +9,7 @@
 					<img src="@/assets/img/ayame-tatematsu.svg" alt="Ayame Tatematsu">
 				</h1>
 				<p class="tag-line">
-					デザインとITで、よりよい”日常”を
+					<img src="@/assets/img/tag-line.svg" alt="デザインとITで、よりよい”日常”を">
 				</p>
 				<p class="scroll-down">
 					<img src="@/assets/img/scroll-down.svg" alt="Scroll Down">
@@ -49,6 +49,7 @@ export default {
 	.detail-wrap {
 		width: 50%;
 		padding-top: 25vh;
+		padding-bottom: 3vh;
 
 		.detail {
 			display: flex;
@@ -59,14 +60,18 @@ export default {
 
 		h1,
 		p {
-			margin: 1em 0;
+			margin: 0.5em 0;
 
 			&.name img {
 				width: 40vw;
 			}
 
 			&.tag-line {
-				font-size: 1.8vw;
+				padding-bottom: 3vw;
+
+				img {
+					height: 2vw;
+				}
 			}
 
 			&.scroll-down img {
