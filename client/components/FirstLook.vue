@@ -36,16 +36,12 @@ export default {
 	props: {
 		scrollY: Number,
 		windowWidth: Number,
-		windowHeight: Number,
 	},
 	watch: {
 		scrollY () {
 			this.updateHorses()
 		},
 		windowWidth () {
-			this.updateHorses()
-		},
-		windowHeight () {
 			this.updateHorses()
 		},
 	},
@@ -65,7 +61,7 @@ export default {
 		getHorsePosition (count, horseNum) {
 			const radius = this.windowWidth * 1.00 / 68
 
-			// スクロール位置 * 角速度 + なんかの角度°(円の3等分) * ホイール番号 - なんかの角度°(初期値を円の2.6等分した場所にする
+			// スクロール位置 * 角速度 + 120°(円の3等分) * ホイール番号 - なんかの角度°(初期値を円の2.6等分した場所にする
 			const speed = 0.025
 			const radian = count * speed + 2 * Math.PI / 3 * -horseNum + Math.PI / 2 * 2.6
 
