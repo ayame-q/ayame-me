@@ -30,16 +30,22 @@
 </template>
 
 <script>
-import { settings } from "@nuxtjs/eslint-config"
 
 export default {
 	name: "FirstLook",
 	props: {
 		scrollY: Number,
 		windowWidth: Number,
+		windowHeight: Number,
 	},
 	watch: {
 		scrollY () {
+			this.updateHorses()
+		},
+		windowWidth () {
+			this.updateHorses()
+		},
+		windowHeight () {
 			this.updateHorses()
 		},
 	},
