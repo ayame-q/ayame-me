@@ -1,3 +1,8 @@
+# アセットデータ
+/assets/
+
+/.husky/
+
 ### macOS template
 # General
 .DS_Store
