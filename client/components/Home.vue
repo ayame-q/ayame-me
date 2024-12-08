@@ -2,7 +2,7 @@
 	<div id="index">
 		<header-nav v-bind:scroll-y="scrollY" />
 		<main ref="main">
-			<first-look />
+			<first-look v-bind:scroll-y="scrollY" v-bind:window-width="windowWidth" />
 			<about-me />
 			<skills-list />
 			<works-list v-bind:works="works" v-bind:scroll-y="scrollY" v-bind:window-width="windowWidth" v-bind:window-height="windowHeight" />
